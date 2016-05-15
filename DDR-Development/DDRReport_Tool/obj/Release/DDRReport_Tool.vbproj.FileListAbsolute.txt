@@ -257,3 +257,7 @@ C:\Documents and Settings\Administrator\Desktop\DDR_GIT\ddr_Dev\DDR\DDR-Developm
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\ddr_Dev\DDR\DDR-Development- v10.9\DDRReport_Tool\obj\Release\DDRReport_Tool.exe
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\ddr_Dev\DDR\DDR-Development- v10.9\DDRReport_Tool\obj\Release\DDRReport_Tool.xml
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\ddr_Dev\DDR\DDR-Development- v10.9\DDRReport_Tool\obj\Release\DDRReport_Tool.pdb
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReport_Tool\bin\Release\DDRReport_Tool.exe.config
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReport_Tool\obj\Release\DDRReport_Tool.exe
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReport_Tool\obj\Release\DDRReport_Tool.xml
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReport_Tool\obj\Release\DDRReport_Tool.pdb

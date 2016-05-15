@@ -121,3 +121,17 @@ C:\Documents and Settings\Administrator\Desktop\DDR_GIT\ddr_Dev\DDR\DDR-Developm
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\ddr_Dev\DDR\DDR-Development- v10.9\DDRReportToolCore\obj\Debug\DDRReportToolCore.dll
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\ddr_Dev\DDR\DDR-Development- v10.9\DDRReportToolCore\obj\Debug\DDRReportToolCore.xml
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\ddr_Dev\DDR\DDR-Development- v10.9\DDRReportToolCore\obj\Debug\DDRReportToolCore.pdb
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\bin\Debug\DDRReportToolCore.dll
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\bin\Debug\DDRReportToolCore.pdb
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\bin\Debug\DDRReportToolCore.xml
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\bin\Debug\Microsoft.Office.Interop.Excel.dll
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\bin\Debug\office.dll
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\bin\Debug\Microsoft.Vbe.Interop.dll
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\bin\Debug\office.xml
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\bin\Debug\Microsoft.Office.Interop.Excel.xml
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\obj\Debug\DDRReportToolCore.Resources.resources
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\obj\Debug\DDRReportToolCore.vbproj.GenerateResource.Cache
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\obj\Debug\DDRReportToolCore.dll
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\obj\Debug\DDRReportToolCore.xml
+C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRReportToolCore\obj\Debug\DDRReportToolCore.pdb
