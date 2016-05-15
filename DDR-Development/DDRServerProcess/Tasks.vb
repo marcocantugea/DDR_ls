@@ -1,7 +1,10 @@
 ﻿Public Class Tasks
+    Inherits EventLog
 
     Public Sub RunTask()
+        WriteLog("Starting DDR Server Process Tasks", EventLogEntryType.Information)
         RunProcess()
+        WriteLog("Finished DDR Server Process Tasks", EventLogEntryType.Information)
     End Sub
 
     Private Sub LockDDRs()
@@ -9,16 +12,34 @@
         Console.WriteLine("************************************************")
         Console.WriteLine("Task Lock DDR's more than 2 days")
         Dim ddrs As New DDRReportToolCore.com.entities.DDRControl_Collection
-        Dim _ADODDR As New DDRReportToolCore.com.ADO.ADODDR
-        _ADODDR.GetDDRControlHeader(ddrs)
+        Dim _ADODDR As DDRReportToolCore.com.ADO.ADODDR
+        Dim lockeddrs As String = ""
+        Try
+            _ADODDR = New DDRReportToolCore.com.ADO.ADODDR
+            _ADODDR.GetDDRControlHeader(ddrs)
+        Catch ex As Exception
+            WriteLog(ex.Message, EventLogEntryType.Error)
+        End Try
+
+
         For Each item As DDRReportToolCore.com.entities.DDRControl In ddrs.Items
             'Console.WriteLine(item.ReportDate.ToString("yyyy-MM-dd") & " <=" & DateAdd(DateInterval.Day, -2, Date.Now).ToString("yyyy-MM-dd"))
             If item.ReportDate <= DateAdd(DateInterval.Day, -2, Date.Now) And item.Lock = False Then
                 Console.WriteLine("Locking DDR Num." & item.DDRID)
-                _ADODDR.LockReprot(item.DDRID)
+                Try
+                    _ADODDR.LockReprot(item.DDRID)
+                    lockeddrs = lockeddrs & item.DDRID & "; "
+                Catch ex As Exception
+                    WriteLog(ex.Message, EventLogEntryType.Error)
+                End Try
             End If
-
         Next
+        If lockeddrs.Length > 0 Then
+            WriteLog("Locked DDR's : " & lockeddrs, EventLogEntryType.Information)
+        Else
+            WriteLog("No DDRs founds to lock", EventLogEntryType.Information)
+        End If
+
         _ADODDR = Nothing
         ddrs = Nothing
         Console.WriteLine("Task Lock DDR's finishied.")
@@ -30,6 +51,7 @@
             If s.Contains("Task-") Then
                 If s = "Task-LockDDR" Then
                     If System.Configuration.ConfigurationSettings.AppSettings(s) = "true" Then
+                        WriteLog("Performing Task - Lock DDR's older than 2 days", EventLogEntryType.Information)
                         LockDDRs()
                     End If
                 End If
