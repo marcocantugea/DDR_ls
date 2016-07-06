@@ -51,13 +51,13 @@ Public Class DDR_From
 
     Private Sub DDR_From_Disposed(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.FormClosing
 
-        CType(Application.OpenForms("DDR_Main").Controls("dgv_ControlDDR"), DataGridView).Rows.Clear()
-        Dim form As DDR_Main
-        form = Application.OpenForms("DDR_Main")
-        form.LoadDDRControlGrid()
-        form.ShowWellOnly()
+        'CType(Application.OpenForms("DDR_Main").Controls("dgv_ControlDDR"), DataGridView).Rows.Clear()
+        'Dim form As DDR_Main
+        'form = Application.OpenForms("DDR_Main")
+        'form.LoadDDRControlGrid()
+        'form.ShowWellOnly()
 
-        _SessionUser.TabController.RemoveAllItems(_SessionUser.User)
+        '_SessionUser.TabController.RemoveAllItems(_SessionUser.User)
 
 
     End Sub

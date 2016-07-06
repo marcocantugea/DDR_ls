@@ -1150,251 +1150,554 @@ Namespace com.file
                 If Not IsNothing(UrgentMRs) Then
                     ' print urgent mr
                     'Marine deparment id =1
-                    y = 34
+                    ' Modificacion realizada el dia Jul 5 2016
+                    ' Se modifica la forma en que se presenta las MR
+                    ' Se agrega un string buffer para recolectar la info y
+                    ' al final se despliega en el nuevo formato
+                    Dim sb_spanish As New System.Text.StringBuilder
+                    Dim sb_english As New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+
+                    y = 33
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(1)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 37 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        
+                        'sb_english.Append(umr.MRNumber & "     " & umr.dateIssued & "     " & umr.MRDescription & "     " & umr.Status & vbCrLf)
+                        'sb_spanish.Append(umr.MRNumber & vbTab & umr.dateIssued & vbTab & umr.MRDescription & vbTab & umr.Status & vbCrLf)
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+
+
+                        'If y <= 37 Then
+                        '    xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '    xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '    xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '    xlSheet.Cells(y, 11).value = umr.Status
+
+                        '    xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '    xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '    xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '    xlSheet.Cells(y, 24).value = umr.Status
+                        '    y += 1
+                        'End If
                     Next
 
-                    'Safety deparment id = 6
-                    y = 64
+                    'Imprime en el archivo de excel las MR obtenidas en el bucle
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+
+
+                    ''Safety deparment id = 6
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+
+                    y = 63
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(6)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 67 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
+
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+
+
+                        '    If y <= 67 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'Hydraulic/mech deparment id = 2
-                    y = 89
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+                    ''Hydraulic/mech deparment id = 2
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 88
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(2)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 93 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
+
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+
+
+                        '    If y <= 93 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'subsea deparment id = 3
-                    y = 114
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+                    ''subsea deparment id = 3
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 113
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(3)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 117 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 117 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'electri deparment id = 4
-                    y = 139
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+                    ''electri deparment id = 4
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 138
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(4)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 142 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 142 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'ET deparment id = 11
-                    y = 164
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+                    ''ET deparment id = 11
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 163
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(11)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 167 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 167 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
 
-
-                    'IT deparment id = 12
-                    y = 184
+                    ''IT deparment id = 12
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 183
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(12)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 187 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 187 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'drilling deparment id = 5
-                    y = 209
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+                    ''drilling deparment id = 5
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 208
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(5)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 212 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 212 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'store deparment id = 7
-                    y = 234
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+
+                    ''store deparment id = 7
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 233
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(7)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 237 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 237 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'project deparment id = 8
-                    y = 259
-                    For Each item As Object In UrgentMRs.GetItemsByDeparmentID(8)
-                        Dim umr As com.entities.UrgentMRs
-                        umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 263 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
-                    Next
+                    ''project deparment id = 8
+                    'y = 259
+                    'For Each item As Object In UrgentMRs.GetItemsByDeparmentID(8)
+                    '    Dim umr As com.entities.UrgentMRs
+                    '    umr = CType(item, com.entities.UrgentMRs)
+                    '    If y <= 263 Then
+                    '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                    '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                    '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                    '        xlSheet.Cells(y, 11).value = umr.Status
 
-                    'engineering deparment id = 9
-                    y = 284
+                    '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                    '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                    '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                    '        xlSheet.Cells(y, 24).value = umr.Status
+                    '        y += 1
+                    '    End If
+                    'Next
+
+                    ''engineering deparment id = 9
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 283
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(9)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 287 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 287 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'ROV deparment id = 10
-                    y = 309
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+                    ''ROV deparment id = 10
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 308
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(10)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 312 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 312 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
-                    'Catering deparment id = 14
-                    y = 333
+                    xlSheet.Cells(y, 1).value = sb_english.ToString
+                    xlSheet.Cells(y, 14).value = sb_spanish.ToString
+
+                    ''Catering deparment id = 14
+                    sb_english = Nothing
+                    sb_spanish = Nothing
+                    sb_english = New System.Text.StringBuilder
+                    sb_spanish = New System.Text.StringBuilder
+                    sb_english.Append("MR Number        Date Issued   MR Desc                                      Status              " & vbLf)
+                    sb_spanish.Append("Num. de MR       Fecha MR      Descripcion de MR                            Estado              " & vbLf)
+                    y = 332
                     For Each item As Object In UrgentMRs.GetItemsByDeparmentID(14)
                         Dim umr As com.entities.UrgentMRs
                         umr = CType(item, com.entities.UrgentMRs)
-                        If y <= 336 Then
-                            xlSheet.Cells(y, 1).value = umr.MRNumber
-                            xlSheet.Cells(y, 4).value = umr.dateIssued
-                            xlSheet.Cells(y, 6).value = umr.MRDescription
-                            xlSheet.Cells(y, 11).value = umr.Status
+                        sb_english.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_english.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_english.Append(" ")
+                        sb_english.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_english.Append("  ")
+                        sb_english.Append(AddSpaces(umr.Status, 20))
+                        sb_english.Append(vbLf)
 
-                            xlSheet.Cells(y, 14).value = umr.MRNumber
-                            xlSheet.Cells(y, 17).value = umr.dateIssued
-                            xlSheet.Cells(y, 19).value = umr.MRDescription
-                            xlSheet.Cells(y, 24).value = umr.Status
-                            y += 1
-                        End If
+                        sb_spanish.Append(AddSpaces(umr.MRNumber, 15))
+                        sb_spanish.Append(AddSpaces(umr.dateIssued, 12))
+                        sb_spanish.Append(" ")
+                        sb_spanish.Append(AddSpaces(umr.MRDescription, 30))
+                        sb_spanish.Append("  ")
+                        sb_spanish.Append(AddSpaces(umr.Status, 20))
+                        sb_spanish.Append(vbLf)
+                        '    If y <= 336 Then
+                        '        xlSheet.Cells(y, 1).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 4).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 6).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 11).value = umr.Status
+
+                        '        xlSheet.Cells(y, 14).value = umr.MRNumber
+                        '        xlSheet.Cells(y, 17).value = umr.dateIssued
+                        '        xlSheet.Cells(y, 19).value = umr.MRDescription
+                        '        xlSheet.Cells(y, 24).value = umr.Status
+                        '        y += 1
+                        '    End If
                     Next
 
                 End If
@@ -1466,5 +1769,28 @@ Namespace com.file
                 GC.Collect()
             End Try
         End Sub
+
+        Private Function AddSpaces(ByVal sentence As String, ByVal sizeofspace As Integer) As String
+            Dim result As String = sentence
+
+            If Not IsNothing(sentence) Then
+                Dim sizeofsentence As Integer = sentence.Length
+                If sizeofsentence > sizeofspace Then
+                    result = sentence.Substring(0, sizeofspace - 3)
+                    result = result & "... "
+                Else
+                    Dim i As Integer = sizeofspace - sizeofsentence
+                    For e = 0 To i
+                        result = result & " "
+                    Next
+                End If
+            Else
+                result = ""
+            End If
+
+            Return result
+        End Function
+
+
     End Class
 End Namespace
