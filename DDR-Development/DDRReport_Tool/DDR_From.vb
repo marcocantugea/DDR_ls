@@ -57,7 +57,7 @@ Public Class DDR_From
         'form.LoadDDRControlGrid()
         'form.ShowWellOnly()
 
-        '_SessionUser.TabController.RemoveAllItems(_SessionUser.User)
+        _SessionUser.TabController.RemoveAllItems(_SessionUser.User)
 
 
     End Sub
