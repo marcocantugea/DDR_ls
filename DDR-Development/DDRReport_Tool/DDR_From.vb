@@ -331,14 +331,14 @@ Public Class DDR_From
         dgv_pumps.Columns(6).Name = "%Eff"
         dgv_pumps.Columns(7).Name = "Press"
         dgv_pumps.Columns(8).Name = "C&K Frict."
-        dgv_pumps.Columns(9).Name = "30 strokes"
-        dgv_pumps.Columns(10).Name = "40 strokes"
-        dgv_pumps.Columns(11).Name = "20 strokes" & vbNewLine & " SCR's"
-        dgv_pumps.Columns(12).Name = "20 strokes" & vbNewLine & " CLF"
-        dgv_pumps.Columns(13).Name = "30 strokes" & vbNewLine & " SCR's"
-        dgv_pumps.Columns(14).Name = "30 strokes" & vbNewLine & " CLF"
-        dgv_pumps.Columns(15).Name = "40 strokes" & vbNewLine & " SCR's"
-        dgv_pumps.Columns(16).Name = "40 strokes" & vbNewLine & " CLF"
+        dgv_pumps.Columns(9).Name = "20 strokes"
+        dgv_pumps.Columns(10).Name = "30 strokes"
+        dgv_pumps.Columns(11).Name = "10 strokes" & vbNewLine & " SCR's"
+        dgv_pumps.Columns(12).Name = "10 strokes" & vbNewLine & " CLF"
+        dgv_pumps.Columns(13).Name = "20 strokes" & vbNewLine & " SCR's"
+        dgv_pumps.Columns(14).Name = "20 strokes" & vbNewLine & " CLF"
+        dgv_pumps.Columns(15).Name = "30 strokes" & vbNewLine & " SCR's"
+        dgv_pumps.Columns(16).Name = "30 strokes" & vbNewLine & " CLF"
         dgv_pumps.Columns(17).Name = "ID"
         dgv_pumps.Columns(8).ReadOnly = True
 
@@ -2089,7 +2089,7 @@ Public Class DDR_From
                 'Load pumps
                 If Not IsNothing(_DDR.DDRReport.Pumps) Then
                     For Each item As com.entities.Pumps In _DDR.DDRReport.Pumps.Items
-                        row = New String() {item.PumpNo, item.MakeandModel, item.Stroke, item.Liners, item.SPM, item.GPM, item.EFF, item.Press, item.MP, item.CLF, item.CLFCK, item.s30StrokesChoke, item.s30StrokesCK, item.s50StrokesChoke, item.s40StrokesCK, item.s50StrokesChoke, item.s50StrokesCK, item.PUMPS_ID}
+                        row = New String() {item.PumpNo, item.MakeandModel, item.Stroke, item.Liners, item.SPM, item.GPM, item.EFF, item.Press, item.MP, item.CLF, item.CLFCK, item.s30StrokesChoke, item.s30StrokesCK, item.s40StrokesChoke, item.s40StrokesCK, item.s50StrokesChoke, item.s50StrokesCK, item.PUMPS_ID}
                         dgv_pumps.Rows.Add(row)
                     Next
                 End If
