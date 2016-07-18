@@ -5,132 +5,140 @@ Namespace com.ADO
         Inherits com.data.OleDBConnectionObj
 
         Public Sub SaveAllDDR(ByVal ddr As DDRControl)
-            Try
-                If ddr.DDRID = -1 Then
-                    SaveDDRControl(ddr)
-                    ddr.DDRID = GetLastID("DDR_Control", "DDRID")
-                    ddr.DDRReport.DDRID = ddr.DDRID
-                End If
-                If Not IsNothing(ddr.DDRReport) Then
-                    UpdateDateAndReportNo(ddr.ReportNo, ddr.ReportDate, ddr.DDRID)
-                    ddr.DDRReport.DDRID = ddr.DDRID
-                    SaveDDRReport(ddr.DDRReport)
+            'Modificacion 18 Jul 2016
+            ' Se modifico en validad que no se agrege un DDR con la misma fecha existente
+            If ValidateDDRDate(ddr.ReportDate, ddr.Well) Then
+                Try
 
-
-                    'Save DRR hrs
-                    If Not IsNothing(ddr.DDRReport.DDRHrs) Then
-                        For Each item As com.entities.DDRHrs In ddr.DDRReport.DDRHrs.Items
-                            item.DDR_Report_ID = ddr.DDRID
-                            SaveDDR_Hrs(item)
-                        Next
+                    If ddr.DDRID = -1 Then
+                        SaveDDRControl(ddr)
+                        ddr.DDRID = GetLastID("DDR_Control", "DDRID")
+                        ddr.DDRReport.DDRID = ddr.DDRID
                     End If
+                    If Not IsNothing(ddr.DDRReport) Then
+                        UpdateDateAndReportNo(ddr.ReportNo, ddr.ReportDate, ddr.DDRID)
+                        ddr.DDRReport.DDRID = ddr.DDRID
+                        SaveDDRReport(ddr.DDRReport)
 
-                    'Save BITS
-                    If Not IsNothing(ddr.DDRReport.BITS) Then
-                        For Each bit As com.entities.BITS In ddr.DDRReport.BITS.Items
-                            bit.DDR_Report_ID = ddr.DDRID
-                            SaveBits(bit)
-                        Next
-                    End If
 
-                    'Save Drill String
-                    If Not IsNothing(ddr.DDRReport.DrillString) Then
-                        For Each bit As com.entities.DrillString In ddr.DDRReport.DrillString.Items
-                            bit.DDR_Report_ID = ddr.DDRID
-                            bit.DrillString_ID = -1
-                            SaveDrillString(bit)
-                        Next
-                    End If
-
-                    'Save Drill String survey
-                    If Not IsNothing(ddr.DDRReport.DrillString_Survey) Then
-                        For Each item As com.entities.DrillString_Survey In ddr.DDRReport.DrillString_Survey.Items
-                            item.DDR_Report_ID = ddr.DDRID
-                            item.Survey_ID = -1
-                            SaveDrillString_survey(item)
-                        Next
-                    End If
-
-                    'Save pumps
-                    If Not IsNothing(ddr.DDRReport.Pumps) Then
-                        For Each item As com.entities.Pumps In ddr.DDRReport.Pumps.Items
-                            item.DDR_Report_ID = ddr.DDRID
-                            item.PUMPS_ID = -1
-                            SavePumps(item)
-                        Next
-                    End If
-
-                    'Save shakers
-                    If Not IsNothing(ddr.DDRReport.Shakers) Then
-                        For Each item As com.entities.Shakers In ddr.DDRReport.Shakers.Items
-                            item.DDR_Report_ID = ddr.DDRID
-                            item.Shakers_ID = -1
-                            SaveShakers(item)
-                        Next
-                    End If
-
-                    'Save Mud
-                    If Not IsNothing(ddr.DDRReport.Mud) Then
-                        For Each item As com.entities.Mud In ddr.DDRReport.Mud.Items
-                            item.DDR_Report_ID = ddr.DDRID
-                            item.MUD_ID = -1
-                            SaveMud(item)
-                        Next
-                    End If
-
-                    'Save Marine Info
-                    If Not IsNothing(ddr.DDRReport.MarineInfo) Then
-                        ddr.DDRReport.MarineInfo.DDR_Report_ID = ddr.DDRID
-                        SaveMarineInfo(ddr.DDRReport.MarineInfo)
-
-                    End If
-
-                    'Save POB
-                    If Not IsNothing(ddr.DDRReport.POB) Then
-                        ddr.DDRReport.POB.DDR_Report_ID = ddr.DDRID
-                        SavePOB(ddr.DDRReport.POB)
-                    End If
-
-                    'Save Riser Profile
-                    If Not IsNothing(ddr.DDRReport.RiserProfile) Then
-                        For Each item As RiserProfile In ddr.DDRReport.RiserProfile.Items
-                            item.DDR_Report_ID = ddr.DDRID
-                            item.IDRiserProfile = -1
-                            SaveRiserProfile(item)
-                        Next
-                    End If
-
-                    'Save SOC
-                    If Not IsNothing(ddr.DDRReport.SOC) Then
-                        ddr.DDRReport.SOC.DDR_Report_ID = ddr.DDRID
-                        SaveSOC(ddr.DDRReport.SOC)
-                    End If
-
-                    'Save Logistic Transit Log
-                    If Not IsNothing(ddr.DDRReport.LogisticTransitLog) Then
-                        For Each item As LogisticTransitLog In ddr.DDRReport.LogisticTransitLog.items
-                            item.DDR_Report_ID = ddr.DDRID
-                            item.LTID = -1
-                            SaveLogisticTransitLog(item)
-                        Next
-                    End If
-
-                    'Save Urgents MRs
-                    If Not IsNothing(ddr.DDRReport.UrgentsMR) Then
-                        For Each item As UrgentMRs In ddr.DDRReport.UrgentsMR.items
-                            If item.MRUrgentID = -1 Then
+                        'Save DRR hrs
+                        If Not IsNothing(ddr.DDRReport.DDRHrs) Then
+                            For Each item As com.entities.DDRHrs In ddr.DDRReport.DDRHrs.Items
                                 item.DDR_Report_ID = ddr.DDRID
-                                SaveUrgentMRs(item)
-                            End If
-                        Next
+                                SaveDDR_Hrs(item)
+                            Next
+                        End If
+
+                        'Save BITS
+                        If Not IsNothing(ddr.DDRReport.BITS) Then
+                            For Each bit As com.entities.BITS In ddr.DDRReport.BITS.Items
+                                bit.DDR_Report_ID = ddr.DDRID
+                                SaveBits(bit)
+                            Next
+                        End If
+
+                        'Save Drill String
+                        If Not IsNothing(ddr.DDRReport.DrillString) Then
+                            For Each bit As com.entities.DrillString In ddr.DDRReport.DrillString.Items
+                                bit.DDR_Report_ID = ddr.DDRID
+                                bit.DrillString_ID = -1
+                                SaveDrillString(bit)
+                            Next
+                        End If
+
+                        'Save Drill String survey
+                        If Not IsNothing(ddr.DDRReport.DrillString_Survey) Then
+                            For Each item As com.entities.DrillString_Survey In ddr.DDRReport.DrillString_Survey.Items
+                                item.DDR_Report_ID = ddr.DDRID
+                                item.Survey_ID = -1
+                                SaveDrillString_survey(item)
+                            Next
+                        End If
+
+                        'Save pumps
+                        If Not IsNothing(ddr.DDRReport.Pumps) Then
+                            For Each item As com.entities.Pumps In ddr.DDRReport.Pumps.Items
+                                item.DDR_Report_ID = ddr.DDRID
+                                item.PUMPS_ID = -1
+                                SavePumps(item)
+                            Next
+                        End If
+
+                        'Save shakers
+                        If Not IsNothing(ddr.DDRReport.Shakers) Then
+                            For Each item As com.entities.Shakers In ddr.DDRReport.Shakers.Items
+                                item.DDR_Report_ID = ddr.DDRID
+                                item.Shakers_ID = -1
+                                SaveShakers(item)
+                            Next
+                        End If
+
+                        'Save Mud
+                        If Not IsNothing(ddr.DDRReport.Mud) Then
+                            For Each item As com.entities.Mud In ddr.DDRReport.Mud.Items
+                                item.DDR_Report_ID = ddr.DDRID
+                                item.MUD_ID = -1
+                                SaveMud(item)
+                            Next
+                        End If
+
+                        'Save Marine Info
+                        If Not IsNothing(ddr.DDRReport.MarineInfo) Then
+                            ddr.DDRReport.MarineInfo.DDR_Report_ID = ddr.DDRID
+                            SaveMarineInfo(ddr.DDRReport.MarineInfo)
+
+                        End If
+
+                        'Save POB
+                        If Not IsNothing(ddr.DDRReport.POB) Then
+                            ddr.DDRReport.POB.DDR_Report_ID = ddr.DDRID
+                            SavePOB(ddr.DDRReport.POB)
+                        End If
+
+                        'Save Riser Profile
+                        If Not IsNothing(ddr.DDRReport.RiserProfile) Then
+                            For Each item As RiserProfile In ddr.DDRReport.RiserProfile.Items
+                                item.DDR_Report_ID = ddr.DDRID
+                                item.IDRiserProfile = -1
+                                SaveRiserProfile(item)
+                            Next
+                        End If
+
+                        'Save SOC
+                        If Not IsNothing(ddr.DDRReport.SOC) Then
+                            ddr.DDRReport.SOC.DDR_Report_ID = ddr.DDRID
+                            SaveSOC(ddr.DDRReport.SOC)
+                        End If
+
+                        'Save Logistic Transit Log
+                        If Not IsNothing(ddr.DDRReport.LogisticTransitLog) Then
+                            For Each item As LogisticTransitLog In ddr.DDRReport.LogisticTransitLog.items
+                                item.DDR_Report_ID = ddr.DDRID
+                                item.LTID = -1
+                                SaveLogisticTransitLog(item)
+                            Next
+                        End If
+
+                        'Save Urgents MRs
+                        If Not IsNothing(ddr.DDRReport.UrgentsMR) Then
+                            For Each item As UrgentMRs In ddr.DDRReport.UrgentsMR.items
+                                If item.MRUrgentID = -1 Then
+                                    item.DDR_Report_ID = ddr.DDRID
+                                    SaveUrgentMRs(item)
+                                End If
+                            Next
+                        End If
+
                     End If
+                    MsgBox("DDR Saved.")
+                Catch ex As Exception
 
-                End If
-                MsgBox("DDR Saved.")
-            Catch ex As Exception
+                    Throw
+                End Try
+            Else
+                Throw New Exception("A DDR with the same date was found. Can not create a DDR with the same date.")
+            End If
 
-                Throw
-            End Try
         End Sub
 
         
@@ -606,6 +614,39 @@ Namespace com.ADO
         End Sub
 
 #Region "Geters Info"
+
+        'Modificado el 18 de Jul 2016
+        ' Se agrego funcion de validar si la fecha del ddr que se desea grabar ya existe
+        Public Function ValidateDDRDate(ByVal fechaddr As Date, ByVal well As String) As Boolean
+            Dim lastddt As Integer = GetLastIDDDR(well)
+            Dim ddrcontro As New DDRControl
+            Dim validation As Boolean = True
+            ddrcontro = GetDDRControlHeader(lastddt)
+
+            If ddrcontro.ReportDate.ToString("MM/dd/yy") = fechaddr.ToString("MM/dd/yy") Then
+                validation = False
+            End If
+
+            Return validation
+        End Function
+
+        'Modificado el 18 de Jul 2016
+        ' se Agrego la funcion de buscar el ultimo reporte por pozo
+        Public Function GetLastIDDDR(ByVal Well As String) As Integer
+            Dim result As Integer = -1
+            Try
+                OpenDB("DB-DDR")
+                connection.Command = New OleDb.OleDbCommand("select max(DDRID) from DDR_CONTROL where Well='" & Well & "'", connection.Connection)
+                result = connection.Command.ExecuteScalar()
+            Catch ex As Exception
+                Throw
+            Finally
+                CloseDB()
+            End Try
+
+            Return result
+        End Function
+
 
         Public Function GetLastID(ByVal table As String, ByVal field As String) As Integer
             Dim result As Integer = -1

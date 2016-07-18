@@ -26,7 +26,20 @@ Public Class DDR_Main
             'ddr.ReportNo = 1
             Dim lastddr As Integer
 
-            lastddr = ado.GetLastID("DDR_Control", "DDRID")
+            ''Modificacion realizada 18 Jul 2016
+            '' Problemas al cargar el ultimo ddr generado
+            '' se corrigio cargando el ultimo reporte generado por pozo
+            '
+            ComboBox1.Focus()
+            ComboBox1.Select()
+            ComboBox1.SelectAll()
+
+            If ComboBox1.SelectedText.ToString.Equals("") Then
+                lastddr = ado.GetLastID("DDR_Control", "DDRID")
+            Else
+                lastddr = ado.GetLastIDDDR(ComboBox1.SelectedText.ToString)
+            End If
+
             ddr = ado.GetCompleteDDRReport(lastddr)
 
             ddr.ReportDate = Date.Parse(Today.ToString("MM/dd/yyyy"), New Cultureinfo("en-US"))
@@ -246,6 +259,8 @@ Public Class DDR_Main
             Dim ddrform As New DDR_From
             ddrform.User = _SessionUser
             ddrform.DDRReport = ddr
+            'Modificacion 18 Jul 2016 error al no crear el obj
+            ddr.DDRReport = New DDRReportToolCore.com.entities.DDRReport
             ddrform.FormMode = FormModes.Insert
             ddrform.Show()
         End If

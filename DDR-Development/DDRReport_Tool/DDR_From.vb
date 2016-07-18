@@ -582,7 +582,7 @@ Public Class DDR_From
                     _saved = True
 
                 Catch ex As Exception
-                    MsgBox(ex.Message.ToString)
+                    MsgBox(ex.Message.ToString, MsgBoxStyle.Critical, "DDR Error")
                 End Try
 
                 Dim ado As New com.ADO.ADODDR
@@ -912,8 +912,31 @@ Public Class DDR_From
     'toma toda la info para ponerla en el objeto
     Private Sub LoadDataToMem()
 
+        'Modificacion 18 Jul 2016 error de logica 
+        Dim _DDRReport As com.entities.DDRReport
+        If _FormMode.Equals(FormMode.Insert) Then
+            _DDRReport = New com.entities.DDRReport
+        End If
+
+        If _FormMode.Equals(FormMode.Edit) Then
+            _DDRReport = _DDR.DDRReport
+        End If
+
         Dim umrs As com.entities.UrgentsMRsCollection
-        umrs = DDRReport.DDRReport.UrgentsMR
+
+        'Modificacion 18 Jul 2016 error al crear un nuevo reporte limpio
+        Try
+            If Not IsNothing(DDRReport.DDRReport.UrgentsMR) Then
+                umrs = DDRReport.DDRReport.UrgentsMR
+            Else
+                umrs = New com.entities.UrgentsMRsCollection
+            End If
+        Catch ex As Exception
+            umrs = New com.entities.UrgentsMRsCollection
+            DDRReport.DDRReport.UrgentsMR = New com.entities.UrgentsMRsCollection
+        End Try
+
+
 
         If TextBox10.Text.Equals("") Then
             _DDR.ReportNo = 0
@@ -940,14 +963,7 @@ Public Class DDR_From
 
         Dim ddrid As Integer = _DDR.DDRReport.DDR_Report_ID
 
-        Dim _DDRReport As com.entities.DDRReport
-        If _FormMode.Equals(FormMode.Insert) Then
-            _DDRReport = New com.entities.DDRReport
-        End If
 
-        If _FormMode.Equals(FormMode.Edit) Then
-            _DDRReport = _DDR.DDRReport
-        End If
 
 
         _DDRReport.DDR_Report_ID = ddrid
@@ -1364,7 +1380,9 @@ Public Class DDR_From
                 End If
 
                 If Not IsNothing(row.Cells(17).Value) Then
-                    pump.PUMPS_ID = row.Cells(17).Value
+                    If Not row.Cells(17).Value.Equals("") Then
+                        pump.PUMPS_ID = row.Cells(17).Value
+                    End If
                 End If
                 pumps.Add(pump)
             End If
@@ -1680,16 +1698,59 @@ Public Class DDR_From
             If Not TextBox142.Text = "" Then
                 POB.POB_ID = Integer.Parse(TextBox142.Text)
             End If
-            POB.GRCrew = Integer.Parse(TextBox95.Text)
-            POB.GRServ = Integer.Parse(TextBox96.Text)
-            POB.Catering = Integer.Parse(TextBox97.Text)
-            POB.Pemex = Integer.Parse(TextBox98.Text)
-            POB.OpSer = Integer.Parse(TextBox99.Text)
+            If Not TextBox95.Text.Equals("") Then
+                If IsNumeric(TextBox95.Text) Then
+                    POB.GRCrew = Integer.Parse(TextBox95.Text)
+                End If
+            End If
+            If Not TextBox96.Text.Equals("") Then
+                If IsNumeric(TextBox96.Text) Then
+                    POB.GRServ = Integer.Parse(TextBox96.Text)
+                End If
+            End If
+
+            If Not TextBox97.Text.Equals("") Then
+                If IsNumeric(TextBox97.Text) Then
+                    POB.Catering = Integer.Parse(TextBox97.Text)
+                End If
+            End If
+            If Not TextBox98.Text.Equals("") Then
+                If IsNumeric(TextBox98.Text) Then
+                    POB.Pemex = Integer.Parse(TextBox98.Text)
+                End If
+            End If
+
+            If Not TextBox99.Text.Equals("") Then
+                If IsNumeric(TextBox99.Text) Then
+                    POB.OpSer = Integer.Parse(TextBox99.Text)
+                End If
+            End If
+
+            If Not TextBox101.Text.Equals("") Then
+                If IsNumeric(TextBox101.Text) Then
+                    POB.DailyCost = Integer.Parse(TextBox101.Text)
+                End If
+            End If
+
             'POB.Total = Integer.Parse(TextBox100.Text)
-            POB.DailyCost = Integer.Parse(TextBox101.Text)
-            POB.AccCost = Integer.Parse(TextBox102.Text)
-            POB.AverageCost = Integer.Parse(TextBox103.Text)
-            POB.DaysFromLAstLTA = Integer.Parse(TextBox104.Text)
+            If Not TextBox102.Text.Equals("") Then
+                If IsNumeric(TextBox102.Text) Then
+                    POB.AccCost = Integer.Parse(TextBox102.Text)
+                End If
+            End If
+
+            If Not TextBox103.Text.Equals("") Then
+                If IsNumeric(TextBox103.Text) Then
+                    POB.AverageCost = Integer.Parse(TextBox103.Text)
+                End If
+            End If
+            If Not TextBox104.Text.Equals("") Then
+                If IsNumeric(TextBox104.Text) Then
+                    POB.DaysFromLAstLTA = Integer.Parse(TextBox104.Text)
+                End If
+            End If
+
+
             _DDRReport.POB = POB
         Catch ex As Exception
             MsgBox("Error to save POB data filled not numeric")
