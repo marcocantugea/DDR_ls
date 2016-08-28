@@ -1457,11 +1457,8 @@ Partial Class DDR_From
         '
         'dgv_BITS
         '
-        Me.dgv_BITS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_BITS.Location = New System.Drawing.Point(5, 25)
-        Me.dgv_BITS.MultiSelect = False
         Me.dgv_BITS.Name = "dgv_BITS"
-        Me.dgv_BITS.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_BITS.Size = New System.Drawing.Size(746, 179)
         Me.dgv_BITS.TabIndex = 0
         '

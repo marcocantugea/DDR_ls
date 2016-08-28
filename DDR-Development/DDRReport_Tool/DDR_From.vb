@@ -266,7 +266,7 @@ Public Class DDR_From
         Dim row As String() = New String() {"", "", "", "", "", "", "", "", "", "", "", ""}
         dgv_BITS.Rows.Add(row)
         dgv_BITS.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
-        dgv_BITS.RowHeadersVisible = False
+        'dgv_BITS.RowHeadersVisible = False
         dgv_BITS.Columns(11).ReadOnly = True
         dgv_BITS.Columns(11).Width = 35
 
@@ -4116,6 +4116,7 @@ Public Class DDR_From
         Catch ex As Exception
         End Try
     End Sub
+
 End Class
 Public Enum FormModes
     Insert = 0

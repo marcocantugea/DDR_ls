@@ -757,9 +757,27 @@ Namespace com.file
 
                         'se agrega que solo que agarre los dos ultimos.
                         Dim bitstoprint As New List(Of entities.BITS)
-                        'Seleciona los dos ultimos objetos de la coleccion
-                        bitstoprint.Add(DDR.DDRReport.BITS.Items(DDR.DDRReport.BITS.Items.Count - 2))
-                        bitstoprint.Add(DDR.DDRReport.BITS.Items(DDR.DDRReport.BITS.Items.Count - 1))
+
+                        '' Modificacion 28 de Agosto 2016
+                        '' Error al imprimir los BITS si la coleccion es 0 o menor que 2 items.
+
+
+                        If (DDR.DDRReport.BITS.Items.Count < 2) Then
+                            If DDR.DDRReport.BITS.Items.Count = 1 Then
+                                bitstoprint.Add(DDR.DDRReport.BITS.Items(0))
+                            Else
+                                bitstoprint.Add(DDR.DDRReport.BITS.Items(0))
+                                bitstoprint.Add(DDR.DDRReport.BITS.Items(1))
+                            End If
+
+
+                        Else
+                            'Seleciona los dos ultimos objetos de la coleccion
+                            bitstoprint.Add(DDR.DDRReport.BITS.Items(DDR.DDRReport.BITS.Items.Count - 2))
+                            bitstoprint.Add(DDR.DDRReport.BITS.Items(DDR.DDRReport.BITS.Items.Count - 1))
+                        End If
+
+
 
                         Dim y As Integer = 44
                         'se modificica el loop para que solo obtenga los dos ultimos.
