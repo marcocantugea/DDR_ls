@@ -3269,7 +3269,7 @@ Public Class DDR_From
         Dim ado As New com.ADO.ADODDR
         Dim deparmentid As Integer
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
-        If e.KeyCode = Keys.F2 Then
+        If e.KeyCode = Keys.F3 Then
             Dim i As Integer
             i = MsgBox("Do you want to load the last report information?", MsgBoxStyle.YesNo, "DDR New form")
             If i = vbYes Then
