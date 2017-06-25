@@ -4117,6 +4117,33 @@ Public Class DDR_From
         End Try
     End Sub
 
+    Private Sub dgv_WorkOrders_KeyDown(sender As Object, e As KeyEventArgs) Handles dgv_WorkOrders.KeyDown
+        Dim ado As New com.ADO.ADODDR
+        Dim deparmentid As Integer
+        deparmentid = ado.GetDeparmentID(ComboBox1.Text)
+        If e.KeyCode = Keys.F3 Then
+            Dim i As Integer
+            i = MsgBox("Do you want to load the last report information?", MsgBoxStyle.YesNo, "DDR New form")
+            If i = vbYes Then
+                'ddr.Active = True
+                'ddr.ReportNo = 1
+                Dim lastddr As Integer
+                'lastddr = ado.GetLastID("DDR_Control", "DDRID")
+                lastddr = _DDR.DDRID
+                ddrloaded = ado.GetCompleteDDRReport(lastddr - 1)
+                For Each item As com.entities.WorkOrder In ddrloaded.DDRReport.WorkOrders.items
+                    If item.Deparment_ID.Equals(deparmentid) Then
+                        item.WorkOrderID = -1
+                        item.DDR_Report_ID = _DDR.DDRID
+                        _DDR.DDRReport.WorkOrders.Add(item, True)
+                        '_DDR.DDRReport.UrgentsMR.Add(item, True)
+                        Dim row As String() = {item.WONumber, item.WODescription, item.WorkOrderID}
+                        dgv_WorkOrders.Rows.Add(row)
+                    End If
+                Next
+            End If
+        End If
+    End Sub
 End Class
 Public Enum FormModes
     Insert = 0

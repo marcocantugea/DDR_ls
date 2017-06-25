@@ -21,20 +21,20 @@ Public Class Main
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        Dim oAccess As Access.Application
+        'Dim oAccess As Access.Application
 
-        oAccess = New Access.ApplicationClass()
-        oAccess.Visible = True
+        'oAccess = New Access.ApplicationClass()
+        'oAccess.Visible = True
 
 
-        oAccess.OpenCurrentDatabase(filepath:="C:\Users\IT LA MURALLA IV\Documents\Marco.Cantu\Software Development\Digital DDR\Development\reports\reports.accdb")
-        oAccess.DoCmd.SelectObject(ObjectType:=Access.AcObjectType.acReport, ObjectName:="DDR_Report", InDatabaseWindow:=True)
-        oAccess.DoCmd.OpenReport("DDR_Report", Access.AcView.acViewPreview)
+        'oAccess.OpenCurrentDatabase(filepath:="C:\Users\IT LA MURALLA IV\Documents\Marco.Cantu\Software Development\Digital DDR\Development\reports\reports.accdb")
+        'oAccess.DoCmd.SelectObject(ObjectType:=Access.AcObjectType.acReport, ObjectName:="DDR_Report", InDatabaseWindow:=True)
+        'oAccess.DoCmd.OpenReport("DDR_Report", Access.AcView.acViewPreview)
 
         'oAccess.DoCmd.PrintOut(PrintRange:=Access.AcPrintRange.acSelection, Copies:=1, CollateCopies:=False)
 
         'oAccess.Quit()
-        oAccess = Nothing
+        'oAccess = Nothing
 
     End Sub
 
