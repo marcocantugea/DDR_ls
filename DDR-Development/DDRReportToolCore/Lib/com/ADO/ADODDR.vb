@@ -1365,6 +1365,9 @@ Namespace com.ADO
                                             If member.PropertyType.Name = "Int32" Then
                                                 member.SetValue(wo, Integer.Parse(row(member.Name)), Nothing)
                                             End If
+                                            If member.PropertyType.Name = "Boolean" Then
+                                                member.SetValue(wo, Boolean.Parse(row(member.Name)), Nothing)
+                                            End If
                                         End If
                                     End If
                                 End If

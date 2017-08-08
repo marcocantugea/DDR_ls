@@ -1765,6 +1765,87 @@ Namespace com.file
             End If
         End Sub
 
+        'Agregado el 7-Agosto-2017
+        'Agregar funcionalidad para el formato F1
+
+        Public Sub FillF1(DDR As com.entities.DDRControl, sheet As Integer, Optional lenguaje As String = "ENG")
+            'OpenDocument()
+            xlSheet = xlApp.Workbooks.Application.Worksheets(sheet)
+            xlSheet.Activate()
+
+            If Not IsNothing(DDR) Then
+                
+                If lenguaje = "ESP" Then
+                    'imprime la fecha del reporte
+                    xlSheet.Cells(9, 13).value = DDR.ReportDate
+                    'imprime el nombre del reporte
+                    xlSheet.Cells(10, 13).value = DDR.Well
+                Else
+                    'imprime la fecha del reporte
+                    xlSheet.Cells(8, 13).value = DDR.ReportDate
+                    'imprime el nombre del reporte
+                    xlSheet.Cells(9, 13).value = DDR.Well
+                End If
+            End If
+
+            'Celdas donde empieza las WO correctivas solo 8 renglones
+            Dim c_row As Integer = 22
+            Dim p_row As Integer = 31
+
+            If Not IsNothing(DDR.DDRReport.Activities) Then
+
+                'Imprime los renglones de WOs correctivas y preventivas
+                Dim WorkOrders As com.entities.WorkOrderCollection = DDR.DDRReport.WorkOrders
+                For Each item As com.entities.WorkOrder In WorkOrders.Items
+                    If item.WOToF1 Then
+                        If item.WOCorrective Then
+                            If lenguaje = "ENG" Then
+                                xlSheet.Cells(c_row, 2).value = item.WODescription
+                            Else
+                                xlSheet.Cells(c_row, 2).value = item.WODescriptionSpanish
+                            End If
+                            xlSheet.Cells(c_row, 14).value = item.WONumber
+                            c_row = c_row + 1
+                            If c_row >= 30 Then
+                                c_row = 29
+                            End If
+                        End If
+                        If item.WOPreventive Then
+                            If lenguaje = "ENG" Then
+                                xlSheet.Cells(p_row, 2).value = item.WODescription
+                            Else
+                                xlSheet.Cells(p_row, 2).value = item.WODescriptionSpanish
+                            End If
+                            xlSheet.Cells(p_row, 14).value = item.WONumber
+                            p_row = p_row + 1
+                            If p_row > 38 Then
+                                p_row = 38
+                            End If
+                        End If
+                    End If
+                Next
+
+                'Imprime el dato de disel
+                If Not IsNothing(DDR.DDRReport.MarineInfo) Then
+                    xlSheet.Cells(43, 2).value = "NOTE: " & DDR.DDRReport.MarineInfo.TodayStock_Diesel & " M3 OF DIESEL FUEL ONBOARD."
+                End If
+
+                'Imprime el dato de Drill warte y pot water
+                If Not IsNothing(DDR.DDRReport.MarineInfo) Then
+                    xlSheet.Cells(46, 5).value = DDR.DDRReport.MarineInfo.TodayStock_DrillWater
+                End If
+
+                'Imprime el dato de Drill warte y pot water
+                If Not IsNothing(DDR.DDRReport.MarineInfo) Then
+                    xlSheet.Cells(47, 5).value = DDR.DDRReport.MarineInfo.TodayStock_PotWater
+                End If
+
+            End If
+
+
+        End Sub
+
+
 
         Public Sub CloseDocument()
             xlWorkBook.Close()

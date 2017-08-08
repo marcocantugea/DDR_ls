@@ -8,6 +8,54 @@
         Private _WONumber As String
         Private _WODescription As String
 
+
+        'Agregado el dia 5-Ago-2017
+        'Nuevos campos para la funcionalidad del F1
+        Private _WODescriptionSpanish As String
+        Private _WOToF1 As Boolean
+        Private _WOCorrective As Boolean
+        Private _WOPreventive As Boolean
+
+        'Agregado el dia 5-Ago-2017
+        'Nuevos campos para la funcionalidad del F1
+        Public Property WOPreventive As Boolean
+            Get
+                Return _WOPreventive
+            End Get
+            Set(value As Boolean)
+                _WOPreventive = value
+            End Set
+        End Property
+
+        Public Property WOCorrective As Boolean
+            Get
+                Return _WOCorrective
+            End Get
+            Set(value As Boolean)
+                _WOCorrective = value
+            End Set
+        End Property
+
+        Public Property WOToF1() As Boolean
+            Get
+                Return _WOToF1
+            End Get
+            Set(value As Boolean)
+                _WOToF1 = value
+            End Set
+        End Property
+
+        Public Property WODescriptionSpanish() As String
+            Get
+                Return _WODescriptionSpanish
+            End Get
+            Set(value As String)
+                _WODescriptionSpanish = value
+            End Set
+        End Property
+
+
+
         Public Property WODescription() As String
             Get
                 Return _WODescription

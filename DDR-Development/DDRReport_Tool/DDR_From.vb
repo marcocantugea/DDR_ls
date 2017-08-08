@@ -540,12 +540,39 @@ Public Class DDR_From
     End Sub
 
     Public Sub LoadWorkOrdersGrid()
-        dgv_WorkOrders.ColumnCount = "3"
-        dgv_WorkOrders.Columns(0).Name = "WO Number"
-        dgv_WorkOrders.Columns(1).Name = "WO Description"
-        dgv_WorkOrders.Columns(2).Name = "ID"
+        'Agregado el dia 5 Agosto 2017
+        'Agregar funcionalidad para llenar F1
+
+        Dim chk_preventive As New DataGridViewCheckBoxColumn
+        chk_preventive.Width = 30
+        chk_preventive.Name = "P"
+        dgv_WorkOrders.Columns.Add(chk_preventive)
+
+        Dim chk_corrective As New DataGridViewCheckBoxColumn
+        chk_corrective.Width = 30
+        chk_corrective.Name = "C"
+        dgv_WorkOrders.Columns.Add(chk_corrective)
+
+        '-------------------------------------------
+
+
+        dgv_WorkOrders.ColumnCount = "6"
+        dgv_WorkOrders.Columns(2).Name = "WO Number"
+        dgv_WorkOrders.Columns(3).Name = "WO Description"
+        dgv_WorkOrders.Columns(4).Name = "WO Description Spanish"
+        dgv_WorkOrders.Columns(5).Name = "ID"
         dgv_WorkOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        dgv_WorkOrders.Columns(2).Width = 30
+        dgv_WorkOrders.Columns(5).Width = 30
+        dgv_WorkOrders.Columns(0).Width = 30
+        dgv_WorkOrders.Columns(1).Width = 30
+        'Agregado el dia 5 Agosto 2017
+        'Agregar funcionalidad para llenar F1
+
+        Dim chk As New DataGridViewCheckBoxColumn
+        dgv_WorkOrders.Columns.Add(chk)
+        chk.HeaderText = "WO to F1"
+        chk.Name = "WOtoF1"
+        chk.Width = 30
 
 
     End Sub
@@ -2728,7 +2755,24 @@ Public Class DDR_From
         If Not IsNothing(DDRReport.DDRReport.WorkOrders) Then
             For Each item As com.entities.WorkOrder In _DDR.DDRReport.WorkOrders.items
                 If item.Deparment_ID.Equals(deparmentid) Then
-                    row = New String() {item.WONumber, item.WODescription, item.WorkOrderID}
+                    'Agregado el dia 5 de Agosto 2017
+                    ' Funcionalidad para el F1
+                    Dim chk As Boolean = False
+                    If item.WOToF1 Then
+                        chk = True
+                    End If
+
+                    Dim chk_p As Boolean = False
+                    If item.WOPreventive Then
+                        chk_p = True
+                    End If
+
+                    Dim chk_c As Boolean = False
+                    If item.WOCorrective Then
+                        chk_c = True
+                    End If
+
+                    row = New String() {chk_p, chk_c, item.WONumber, item.WODescription, item.WODescriptionSpanish, item.WorkOrderID, chk}
                     dgv_WorkOrders.Rows.Add(row)
                 End If
             Next
@@ -2760,6 +2804,10 @@ Public Class DDR_From
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
         Dim excelformat As New com.file.ExcelExport(Configuration.ConfigurationSettings.AppSettings("ExcelFormatTemplate"))
         Dim activitiesformat As New com.file.ExcelExport(Configuration.ConfigurationSettings.AppSettings("ActivitiesExcelFormatTemplate"))
+        'Agregado 7-Ago-2017
+        'Agragar funcionalidad de reporte de F1
+        Dim f1format As New com.file.ExcelExport(Configuration.ConfigurationSettings.AppSettings("F1Template"))
+
         Try
 
 
@@ -2776,6 +2824,13 @@ Public Class DDR_From
             excelformat.FillDDRonExcel(_DDR, 1, "ENG")
             'English DDR
             excelformat.FillDDRonExcel(_DDR, 2, "ESP")
+
+            'Agregado 7-Ago-2017
+            'Agragar funcionalidad de reporte de F1
+            'Llena Formato F1
+            f1format.OpenDocument()
+            f1format.FillF1(_DDR, 1, "ENG")
+            f1format.FillF1(_DDR, 2, "ESP")
 
 
             MsgBox("Report exported successfully")
@@ -3218,45 +3273,62 @@ Public Class DDR_From
         End If
     End Sub
 
+    'Funcion modificada 8-Agosto-2017
+    ' Agrego funcionadlida y campos para marcar si la WO es Correctiva o Preventiva asi como marcarla para el reporte de F1
+
     Private Sub dgv_WorkOrders_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_WorkOrders.CellEndEdit
         Dim deparmentid As Integer
         Dim ado As New com.ADO.ADODDR
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
-        If dgv_WorkOrders.Rows(e.RowIndex).Cells(0).Value <> "" Or dgv_WorkOrders.Rows(e.RowIndex).Cells(1).Value <> "" Then
-            If IsNothing(dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value) Then
+        If dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value <> "" Or dgv_WorkOrders.Rows(e.RowIndex).Cells(3).Value <> "" Then
+
+            If IsNothing(dgv_WorkOrders.Rows(e.RowIndex).Cells(5).Value) Then
                 Dim wo As New com.entities.WorkOrder
-                wo.WONumber = dgv_WorkOrders.Rows(e.RowIndex).Cells(0).Value
-                wo.WODescription = dgv_WorkOrders.Rows(e.RowIndex).Cells(1).Value
+                wo.WONumber = dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value
+                wo.WODescription = dgv_WorkOrders.Rows(e.RowIndex).Cells(3).Value
+                wo.WODescriptionSpanish = dgv_WorkOrders.Rows(e.RowIndex).Cells(4).Value
+                Dim chk_p As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(0)
+                wo.WOPreventive = chk_p.Value
+                Dim chk_c As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(1)
+                wo.WOCorrective = chk_c.Value
+                wo.WOToF1 = dgv_WorkOrders.Rows(e.RowIndex).Cells(6).Value
                 wo.DDR_Report_ID = _DDR.DDRID
                 wo.Deparment_ID = deparmentid
                 _DDR.DDRReport.WorkOrders.Add(wo, True)
-                dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value = wo.WorkOrderID
+                dgv_WorkOrders.Rows(e.RowIndex).Cells(5).Value = wo.WorkOrderID
             Else
                 Dim wo As New com.entities.WorkOrder
-                wo.WONumber = dgv_WorkOrders.Rows(e.RowIndex).Cells(0).Value
-                wo.WODescription = dgv_WorkOrders.Rows(e.RowIndex).Cells(1).Value
+                wo.WONumber = dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value
+                wo.WODescription = dgv_WorkOrders.Rows(e.RowIndex).Cells(3).Value
+                wo.WODescriptionSpanish = dgv_WorkOrders.Rows(e.RowIndex).Cells(4).Value
+                Dim chk_p As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(0)
+                wo.WOPreventive = chk_p.Value
+                Dim chk_c As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(1)
+                wo.WOCorrective = chk_c.Value
+                wo.WOToF1 = dgv_WorkOrders.Rows(e.RowIndex).Cells(6).Value
                 wo.DDR_Report_ID = _DDR.DDRID
                 wo.Deparment_ID = deparmentid
-                wo.WorkOrderID = dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value
+                wo.WorkOrderID = dgv_WorkOrders.Rows(e.RowIndex).Cells(5).Value
                 _DDR.DDRReport.WorkOrders.Modify(wo)
             End If
         End If
+
     End Sub
 
     Private Sub dgv_WorkOrders_UserDeletedRow(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles dgv_WorkOrders.UserDeletedRow
         Dim deparmentid As Integer
         Dim ado As New com.ADO.ADODDR
         Try
-            If Not IsNothing(e.Row.Cells(2).Value) Then
+            If Not IsNothing(e.Row.Cells(5).Value) Then
                 Dim result As Integer = MsgBox("Do you want to remove the record?", MsgBoxStyle.OkCancel, "Remove record")
                 If result = vbOK Then
                     deparmentid = ado.GetDeparmentID(ComboBox1.Text)
                     Dim wo As New com.entities.WorkOrder
-                    wo.WONumber = e.Row.Cells(0).Value
-                    wo.WODescription = e.Row.Cells(1).Value
+                    wo.WONumber = e.Row.Cells(2).Value
+                    wo.WODescription = e.Row.Cells(3).Value
                     wo.DDR_Report_ID = _DDR.DDRID
                     wo.Deparment_ID = deparmentid
-                    wo.WorkOrderID = e.Row.Cells(2).Value
+                    wo.WorkOrderID = e.Row.Cells(5).Value
                     DDRReport.DDRReport.WorkOrders.Remove(wo)
                 End If
             End If
@@ -4117,6 +4189,8 @@ Public Class DDR_From
         End Try
     End Sub
 
+    'Funcion modificada 8-Ago-2017
+    ' se modifico la funcion para cargar los nuevos campos de Correctivo,preventivo y WOtoF1
     Private Sub dgv_WorkOrders_KeyDown(sender As Object, e As KeyEventArgs) Handles dgv_WorkOrders.KeyDown
         Dim ado As New com.ADO.ADODDR
         Dim deparmentid As Integer
@@ -4137,13 +4211,45 @@ Public Class DDR_From
                         item.DDR_Report_ID = _DDR.DDRID
                         _DDR.DDRReport.WorkOrders.Add(item, True)
                         '_DDR.DDRReport.UrgentsMR.Add(item, True)
-                        Dim row As String() = {item.WONumber, item.WODescription, item.WorkOrderID}
+                        Dim row As String() = {item.WOPreventive, item.WOCorrective, item.WONumber, item.WODescription, item.WODescriptionSpanish, item.WorkOrderID, item.WOToF1}
                         dgv_WorkOrders.Rows.Add(row)
                     End If
                 Next
             End If
         End If
     End Sub
+
+    ' Funcionalidad Agregada 8-Agosto-2017
+    ' Al momento de selecionar una opcion de C o P que revise que solo una este seleccionada.
+
+    Private Sub dgv_WorkOrders_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_WorkOrders.CellContentClick
+        Dim deparmentid As Integer
+        Dim ado As New com.ADO.ADODDR
+        deparmentid = ado.GetDeparmentID(ComboBox1.Text)
+        Try
+            If e.ColumnIndex = 0 Or e.ColumnIndex = 1 Then
+                Dim chk_selected As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(e.ColumnIndex)
+                If e.ColumnIndex = 0 Then
+                    Dim chk As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(1)
+                    If chk.Value = True Then
+                        chk.Value = False
+                    End If
+
+                End If
+                If e.ColumnIndex = 1 Then
+                    Dim chk As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(0)
+                    If chk.Value = True Then
+                        chk.Value = False
+                    End If
+                End If
+            End If
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+
 End Class
 Public Enum FormModes
     Insert = 0

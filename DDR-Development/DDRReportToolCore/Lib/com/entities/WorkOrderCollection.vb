@@ -35,6 +35,10 @@
                         If i.WorkOrderID.Equals(item.WorkOrderID) Then
                             i.WONumber = item.WONumber
                             i.WODescription = item.WODescription
+                            i.WOCorrective = item.WOCorrective
+                            i.WOPreventive = item.WOPreventive
+                            i.WODescriptionSpanish = item.WODescriptionSpanish
+                            i.WOToF1 = item.WOToF1
                         End If
                     Next
                 End If

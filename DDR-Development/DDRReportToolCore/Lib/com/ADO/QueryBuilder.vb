@@ -74,11 +74,13 @@ Namespace com.ADO
                                     _Values.Add("'" & v & "'")
                                 End If
                             Case "Boolean"
-                                If CType(member.GetValue(_Entity, Nothing), Boolean) Then
-                                    _Fields.Add(member.Name)
-                                    Dim v As String = member.GetValue(_Entity, Nothing)
-                                    _Values.Add(v)
-                                End If
+                                'Fix the problem with a false value is entered - 6-Ago-2017
+                                'remove if condition to validate if is true value
+                                'If CType(member.GetValue(_Entity, Nothing), Boolean) Then
+                                _Fields.Add(member.Name)
+                                Dim v As String = member.GetValue(_Entity, Nothing)
+                                _Values.Add(v)
+                                'End If
                         End Select
                     End If
                 End If
@@ -147,11 +149,13 @@ Namespace com.ADO
                                 End If
                             Case "Boolean"
                                 If Not member.Name.Equals(IDParameter) Then
-                                    If CType(member.GetValue(_Entity, Nothing), Boolean) Then
-                                        _Fields.Add(member.Name)
-                                        Dim v As String = member.GetValue(_Entity, Nothing)
-                                        _Values.Add(v)
-                                    End If
+                                    'Fix the problem with a false value is entered - 6-Ago-2017
+                                    'If CType(member.GetValue(_Entity, Nothing), Boolean) Then
+                                    'remove if condition to validate if is true value
+                                    _Fields.Add(member.Name)
+                                    Dim v As String = member.GetValue(_Entity, Nothing)
+                                    _Values.Add(v)
+                                    'End If
                                 End If
                         End Select
                     End If
@@ -214,11 +218,13 @@ Namespace com.ADO
                                 End If
                             Case "Boolean"
                                 If Not member.Name.Equals(IDParameter) Then
-                                    If CType(member.GetValue(_Entity, Nothing), Boolean) Then
-                                        _Fields.Add(member.Name)
-                                        Dim v As String = member.GetValue(_Entity, Nothing)
-                                        _Values.Add(v)
-                                    End If
+                                    'Fix the problem with a false value is entered - 6-Ago-2017
+                                    'remove if condition to validate if is true value
+                                    'If CType(member.GetValue(_Entity, Nothing), Boolean) Then
+                                    _Fields.Add(member.Name)
+                                    Dim v As String = member.GetValue(_Entity, Nothing)
+                                    _Values.Add(v)
+                                    'End If
                                 End If
                         End Select
                     End If
@@ -266,11 +272,13 @@ Namespace com.ADO
                                     _Values.Add("'" & v & "'")
                                 End If
                             Case "Boolean"
-                                If CType(member.GetValue(_Entity, Nothing), Boolean) Then
-                                    _Fields.Add(member.Name)
-                                    Dim v As String = member.GetValue(_Entity, Nothing)
-                                    _Values.Add(v)
-                                End If
+                                'Fix the problem with a false value is entered - 6-Ago-2017
+                                'remove if condition to validate if is true value
+                                'If CType(member.GetValue(_Entity, Nothing), Boolean) Then
+                                _Fields.Add(member.Name)
+                                Dim v As String = member.GetValue(_Entity, Nothing)
+                                _Values.Add(v)
+                                'End If
                         End Select
                     End If
                 End If

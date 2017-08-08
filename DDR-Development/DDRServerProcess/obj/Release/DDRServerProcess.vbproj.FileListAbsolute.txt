@@ -16,3 +16,20 @@ C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\D
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.exe
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.xml
 C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.pdb
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRServerProcess.exe.config
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRServerProcess.exe
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRServerProcess.pdb
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRServerProcess.xml
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRReportToolCore.dll
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\Microsoft.Office.Interop.Excel.dll
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\office.dll
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\Microsoft.Vbe.Interop.dll
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRReportToolCore.pdb
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRReportToolCore.xml
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\office.xml
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.vbprojResolveAssemblyReference.cache
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.Resources.resources
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.vbproj.GenerateResource.Cache
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.exe
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.xml
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.pdb
