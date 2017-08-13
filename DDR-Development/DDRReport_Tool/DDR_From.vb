@@ -683,6 +683,10 @@ Public Class DDR_From
                             ddrhrs_savedata.DrillString_ECD12 = txtECD12.Text
                             ddrhrs_savedata.DrillString_ECD24 = txtECD24.Text
 
+                            'Added 8-Aug-2017
+                            'Missing item to save 
+                            ddrhrs_savedata.DrillString_PUWeight = TextBox138.Text
+
                             adoDDr.UpdateDDRReport(ddrhrs_savedata)
 
                             For Each item As com.entities.DrillString In _DDR.DDRReport.DrillString.Items
@@ -2810,9 +2814,6 @@ Public Class DDR_From
 
         Try
 
-
-            'excelformat.CloseDocument()
-
             'Activities excel format
             activitiesformat.OpenDocument()
             activitiesformat.FillActivities(_DDR, 1)
@@ -2821,9 +2822,9 @@ Public Class DDR_From
             'ddr template 
             excelformat.OpenDocument()
             'Spanish DDR
-            excelformat.FillDDRonExcel(_DDR, 1, "ENG")
+            excelformat.FillDDRonExcelV2(_DDR, 1, "ENG")
             'English DDR
-            excelformat.FillDDRonExcel(_DDR, 2, "ESP")
+            excelformat.FillDDRonExcelV2(_DDR, 2, "ESP")
 
             'Agregado 7-Ago-2017
             'Agragar funcionalidad de reporte de F1
@@ -4250,6 +4251,9 @@ Public Class DDR_From
     End Sub
 
 
+    Private Sub dgv_BITS_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_BITS.CellEndEdit
+
+    End Sub
 End Class
 Public Enum FormModes
     Insert = 0

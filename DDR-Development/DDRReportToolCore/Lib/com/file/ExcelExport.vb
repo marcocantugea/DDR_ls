@@ -1846,7 +1846,6 @@ Namespace com.file
         End Sub
 
 
-
         Public Sub CloseDocument()
             xlWorkBook.Close()
             xlApp.Quit()
@@ -1890,6 +1889,340 @@ Namespace com.file
             Return result
         End Function
 
+
+        '' Added on 8-Aug-2017
+        '' Add the functionality to search on excel a variables to replaced with the values
+        ''
+
+        ''Added on 8-Aug-2017
+        '' Adding SEarch text on a spreedsheed return a excel range
+        Private Function GetSpecifiedRange(ByVal matchStr As String, ByVal objWs As Worksheet) As Range
+            Dim currentFind As Range = Nothing
+            Dim firstFind As Range = Nothing
+            currentFind = objWs.Range("A1:AM200").Find(matchStr, , _
+            XlFindLookIn.xlValues, XlLookAt.xlWhole, XlSearchOrder.xlByRows, XlSearchDirection.xlNext, True)
+            Return currentFind
+        End Function
+
+        ''Added on 8-Aug-2017
+        '' Adding Search on excel the variable and set the variable on the spreedsheet
+        Private Sub PrintMemberOnExcel(member As String, membervalue As String, sheettosearch As Worksheet)
+            Dim oRng As Range = GetSpecifiedRange("&" & member, sheettosearch)
+            If Not IsNothing(oRng) Then
+                sheettosearch.Cells(oRng.Row, oRng.Column).value = membervalue.ToString
+            Else
+                'MsgBox("Text is not found")
+            End If
+        End Sub
+
+        ''Added on 10-Aug-2017
+        '' Function to fill a list on excel, this requires  that on excel file contains the variales 
+        '' Start and End to set the confirguration where the list are going to start
+        '' example : &PUMPS_START and &PUMPS_END this will configure the rows to fill
+        '' also need the variables of the list, but this ones must be with the name of the list (variable listname)
+        '' on the excel file, example: &PUMPS_Stroke, this one must be exact name as the entity object.
+        Private Sub PrintListOnExcel(Of T)(listname As String, List As Collection, ByVal objWs As Worksheet)
+            Dim oRng_init As Range = GetSpecifiedRange("&" & listname & "_START", xlSheet)
+            Dim oRng_end As Range = GetSpecifiedRange("&" & listname & "_END", xlSheet)
+
+            Dim setupcolumns As New Collection
+
+            If Not IsNothing(oRng_init) And Not IsNothing(oRng_end) Then
+                Dim y As Integer = oRng_init.Row
+                objWs.Cells(oRng_init.Row, oRng_init.Column).value = ""
+                objWs.Cells(oRng_end.Row, oRng_end.Column).value = ""
+
+                If List.Count > 0 Then
+                    For Each item As T In List
+                        For Each member In item.GetType.GetProperties
+                            If member.CanRead Then
+                                If member.PropertyType.Name = "String" Or member.PropertyType.Name = "Int32" Or member.PropertyType.Name = "DateTime" Or member.PropertyType.Name = "Boolean" Then
+                                    Dim existcolumn As Boolean = False
+                                    Dim column_selected As Integer = 0
+                                    'Search the column in the array string
+                                    If setupcolumns.Count > 0 Then
+                                        For Each itm As String() In setupcolumns
+                                            If (itm(0).Equals(member.Name)) Then
+                                                existcolumn = True
+                                                column_selected = Integer.Parse(itm(1))
+                                            End If
+                                        Next
+                                        If existcolumn Then
+                                            If IsNothing(member.GetValue(item, Nothing)) Then
+                                                xlSheet.Cells(y, column_selected).value = ""
+                                            Else
+                                                xlSheet.Cells(y, column_selected).value = member.GetValue(item, Nothing).ToString
+                                            End If
+
+                                        Else
+                                            Dim column_info As Range = GetSpecifiedRange("&" & listname & "_" & member.Name, xlSheet)
+                                            If Not IsNothing(column_info) Then
+                                                Dim column_config As String() = New String() {member.Name.ToString, column_info.Column.ToString}
+                                                setupcolumns.Add(column_config)
+                                                If IsNothing(member.GetValue(item, Nothing)) Then
+                                                    xlSheet.Cells(column_info.Row, column_info.Column).value = ""
+                                                Else
+                                                    xlSheet.Cells(column_info.Row, column_info.Column).value = member.GetValue(item, Nothing).ToString
+                                                End If
+
+                                            End If
+                                        End If
+                                    Else
+                                        'column not found
+                                        'needs to find the variabl on the excel file
+                                        'if is found, will take the column configuration
+                                        Dim column_info As Range = GetSpecifiedRange("&" & listname & "_" & member.Name, xlSheet)
+                                        If Not IsNothing(column_info) Then
+                                            Dim column_config As String() = New String() {member.Name.ToString, column_info.Column.ToString}
+                                            setupcolumns.Add(column_config)
+                                            If IsNothing(member.GetValue(item, Nothing)) Then
+                                                xlSheet.Cells(column_info.Row, column_info.Column).value = ""
+                                            Else
+                                                xlSheet.Cells(column_info.Row, column_info.Column).value = member.GetValue(item, Nothing).ToString
+                                            End If
+
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        Next
+
+                        y = y + 1
+                        If y >= oRng_end.Row Then
+                            y = oRng_end.Row
+                        End If
+                    Next
+                End If
+            End If
+        End Sub
+
+        Private Sub PrintDDRHrsOnExcel(List As Dictionary(Of String, com.entities.DDRHrs), ByVal objWs As Worksheet)
+            Dim oRng_init As Range = GetSpecifiedRange("&DDRHrs_START", objWs)
+            Dim oRng_end As Range = GetSpecifiedRange("&DDRHrs_END", objWs)
+           
+            Dim setupcolumns As New Collection
+
+            If Not IsNothing(oRng_init) And Not IsNothing(oRng_end) Then
+                objWs.Cells(oRng_init.Row, oRng_init.Column).value = ""
+                objWs.Cells(oRng_end.Row, oRng_end.Column).value = ""
+                Dim y As Integer = oRng_init.Row
+
+                For Each item As KeyValuePair(Of String, com.entities.DDRHrs) In List
+                    Dim DDRhr As com.entities.DDRHrs = item.Value
+                    For Each member In DDRhr.GetType.GetProperties
+                        If member.CanRead Then
+                            If Not IsNothing(member.GetValue(DDRhr, Nothing)) Then
+                                If member.PropertyType.Name = "String" Or member.PropertyType.Name = "Int32" Or member.PropertyType.Name = "DateTime" Or member.PropertyType.Name = "Boolean" Then
+                                    Dim existcolumn As Boolean = False
+                                    Dim column_selected As Integer = 0
+                                    'Search the column in the array string
+                                    If setupcolumns.Count > 0 Then
+                                        For Each itm As String() In setupcolumns
+                                            If (itm(0).Equals(member.Name)) Then
+                                                existcolumn = True
+                                                column_selected = Integer.Parse(itm(1))
+                                            End If
+                                        Next
+                                        If existcolumn Then
+                                            objWs.Cells(y, column_selected).value = member.GetValue(DDRhr, Nothing).ToString
+                                        Else
+                                            Dim column_info As Range = GetSpecifiedRange("&DDRHrs_" & member.Name, xlSheet)
+                                            If Not IsNothing(column_info) Then
+                                                Dim column_config As String() = New String() {member.Name.ToString, column_info.Column.ToString}
+                                                setupcolumns.Add(column_config)
+                                                objWs.Cells(column_info.Row, column_info.Column).value = member.GetValue(DDRhr, Nothing).ToString
+                                            End If
+                                        End If
+                                    Else
+                                        'column not found
+                                        'needs to find the variabl on the excel file
+                                        'if is found, will take the column configuration
+                                        Dim column_info As Range = GetSpecifiedRange("&DDRHrs_" & member.Name, xlSheet)
+                                        If Not IsNothing(column_info) Then
+                                            Dim column_config As String() = New String() {member.Name.ToString, column_info.Column.ToString}
+                                            setupcolumns.Add(column_config)
+                                            objWs.Cells(column_info.Row, column_info.Column).value = member.GetValue(DDRhr, Nothing).ToString
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        End If
+                    Next
+                    y = y + 1
+                    If y >= oRng_end.Row Then
+                        y = oRng_end.Row
+                    End If
+                Next
+            End If
+        End Sub
+
+
+        ''Added on 10-Aug-2017
+        '' Function added to replace the old function
+        Public Sub FillDDRonExcelV2(ByVal DDR As com.entities.DDRControl, ByVal sheet As Integer, Optional ByVal lenguaje As String = "Eng")
+            'OpenDocument()
+            xlSheet = xlApp.Workbooks.Application.Worksheets(sheet)
+            xlSheet.Activate()
+
+            If Not IsNothing(DDR) Then
+                If Not IsNothing(DDR.DDRReport) Then
+                    'fill Header of DDR
+                    'Fill DDR header info
+                    PrintMemberOnExcel("ReportDate", DDR.ReportDate.ToString("MM/dd/yyyy"), xlSheet)
+                    PrintMemberOnExcel("ReportNo", DDR.ReportNo.ToString, xlSheet)
+
+                    Dim _entity_ddr As com.entities.DDRReport = DDR.DDRReport
+                    For Each member In _entity_ddr.GetType.GetProperties
+                        If member.CanRead Then
+                            'Select Case member.PropertyType.Name
+                            '     Case "String"
+                            'End Select
+                            If Not IsNothing(member.GetValue(_entity_ddr, Nothing)) Then
+                                If member.PropertyType.Name = "String" Or member.PropertyType.Name = "Int32" Or member.PropertyType.Name = "DateTime" Or member.PropertyType.Name = "Boolean" Then
+                                    PrintMemberOnExcel(member.Name, member.GetValue(_entity_ddr, Nothing).ToString, xlSheet)
+                                End If
+
+                            End If
+                        End If
+                    Next
+
+                    'Fill marine info
+                    Dim _entity_mairneinfo As com.entities.MarineInfo = DDR.DDRReport.MarineInfo
+                    For Each member In _entity_mairneinfo.GetType.GetProperties
+                        If member.CanRead Then
+                            If Not IsNothing(member.GetValue(_entity_mairneinfo, Nothing)) Then
+                                If member.PropertyType.Name = "String" Or member.PropertyType.Name = "Int32" Or member.PropertyType.Name = "DateTime" Or member.PropertyType.Name = "Boolean" Then
+                                    PrintMemberOnExcel(member.Name, member.GetValue(_entity_mairneinfo, Nothing).ToString, xlSheet)
+                                End If
+
+                            End If
+                        End If
+                    Next
+
+                    'Save POB
+                    Dim _entity_pob As com.entities.POB = DDR.DDRReport.POB
+                    For Each member In _entity_pob.GetType.GetProperties
+                        If member.CanRead Then
+                            If Not IsNothing(member.GetValue(_entity_pob, Nothing)) Then
+                                If member.PropertyType.Name = "String" Or member.PropertyType.Name = "Int32" Or member.PropertyType.Name = "DateTime" Or member.PropertyType.Name = "Boolean" Then
+                                    PrintMemberOnExcel(member.Name, member.GetValue(_entity_pob, Nothing).ToString, xlSheet)
+                                End If
+                            End If
+                        End If
+                    Next
+
+                    ''Save ddr hrs
+                    If Not IsNothing(DDR.DDRReport.DDRHrs) Then
+                        Dim ddrhrs As New Dictionary(Of String, com.entities.DDRHrs)
+                        For Each DDRhr As com.entities.DDRHrs In DDR.DDRReport.DDRHrs.Items
+                            ddrhrs.Add(DDRhr.Detail_HR_ID, DDRhr)
+                        Next
+                        Dim sorted = From pair In ddrhrs Order By pair.Value
+                        Dim sotedDictrionary = sorted.ToDictionary(Function(p) p.Key, Function(p) p.Value)
+                        PrintDDRHrsOnExcel(sotedDictrionary,xlSheet)
+                    End If
+
+
+                    ''Save bits
+                    If Not IsNothing(DDR.DDRReport.BITS) Then
+                        'se agrega que solo que agarre los dos ultimos.
+                        Dim bitstoprint As New Collection
+                        '' Modificacion 28 de Agosto 2016
+                        '' Error al imprimir los BITS si la coleccion es 0 o menor que 2 items.
+                        If (DDR.DDRReport.BITS.Items.Count < 2) Then
+                            If DDR.DDRReport.BITS.Items.Count = 1 Then
+                                bitstoprint.Add(DDR.DDRReport.BITS.Items(0))
+                            Else
+                                bitstoprint.Add(DDR.DDRReport.BITS.Items(0))
+                                bitstoprint.Add(DDR.DDRReport.BITS.Items(1))
+                            End If
+
+
+                        Else
+                            'Seleciona los dos ultimos objetos de la coleccion
+                            bitstoprint.Add(DDR.DDRReport.BITS.Items(DDR.DDRReport.BITS.Items.Count - 2))
+                            bitstoprint.Add(DDR.DDRReport.BITS.Items(DDR.DDRReport.BITS.Items.Count - 1))
+                        End If
+
+                        PrintListOnExcel(Of com.entities.BITS)("BITS", bitstoprint, xlSheet)
+                    End If
+
+
+                    ''Save drill string
+
+                    If Not IsNothing(DDR.DDRReport.DrillString) Then
+                        Dim drillsringtopreint As New Collection
+                        For Each item As com.entities.DrillString In DDR.DDRReport.DrillString.Items
+                            drillsringtopreint.Add(item)
+                        Next
+                        PrintListOnExcel(Of com.entities.DrillString)("DrillString", drillsringtopreint, xlSheet)
+                    End If
+
+                    'Save drilll string survey
+                    If Not IsNothing(DDR.DDRReport.DrillString_Survey) Then
+                        Dim drillstringsurveyprint As New Collection
+                        If DDR.DDRReport.DrillString_Survey.Count > 0 Then
+                            For Each item As com.entities.DrillString_Survey In DDR.DDRReport.DrillString_Survey.Items
+                                drillstringsurveyprint.Add(item)
+                            Next
+                        End If
+
+                        PrintListOnExcel(Of com.entities.DrillString_Survey)("DrillString_Survey", drillstringsurveyprint, xlSheet)
+                    End If
+
+                    ''Save pumps
+
+                    If Not IsNothing(DDR.DDRReport.Pumps) Then
+                        Dim pumpstoprint As New Collection
+                        If DDR.DDRReport.Pumps.Count > 0 Then
+                            For Each item As com.entities.Pumps In DDR.DDRReport.Pumps.Items
+                                pumpstoprint.Add(item)
+                            Next
+                        End If
+
+                        PrintListOnExcel(Of com.entities.Pumps)("PUMPS", pumpstoprint, xlSheet)
+                    End If
+
+                    ''Save Shakers
+                    If Not IsNothing(DDR.DDRReport.Shakers) Then
+                        Dim shakerstoprint As New Collection
+                        If DDR.DDRReport.Shakers.Count > 0 Then
+                            For Each item As com.entities.Shakers In DDR.DDRReport.Shakers.Items
+                                shakerstoprint.Add(item)
+                            Next
+                        End If
+
+                        PrintListOnExcel(Of com.entities.Shakers)("SHAKERS", shakerstoprint, xlSheet)
+                    End If
+
+                    'Save mud list
+                    If Not IsNothing(DDR.DDRReport.Mud) Then
+                        Dim mudtoprint As New Collection
+                        If DDR.DDRReport.Mud.Count > 0 Then
+                            For Each item As com.entities.Mud In DDR.DDRReport.Mud.Items
+                                mudtoprint.Add(item)
+                            Next
+                        End If
+
+                        PrintListOnExcel(Of com.entities.Mud)("MUD", mudtoprint, xlSheet)
+                    End If
+
+                    'Save Riser Profile
+                    If Not IsNothing(DDR.DDRReport.RiserProfile) Then
+                        Dim riserprofiletoprint As New Collection
+                        If DDR.DDRReport.RiserProfile.Count > 0 Then
+                            For Each item As com.entities.RiserProfile In DDR.DDRReport.RiserProfile.Items
+                                riserprofiletoprint.Add(item)
+                            Next
+                        End If
+
+                        PrintListOnExcel(Of com.entities.RiserProfile)("RiserProfile", riserprofiletoprint, xlSheet)
+                    End If
+
+                End If
+            End If
+
+        End Sub
 
     End Class
 End Namespace
