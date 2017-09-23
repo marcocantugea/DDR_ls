@@ -180,6 +180,7 @@ C:\Documents and Settings\Administrator\Desktop\DDR_GIT\DDR_ls\DDR-Development\D
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReportToolCore\bin\Release\DDRReportToolCore.dll
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReportToolCore\bin\Release\DDRReportToolCore.pdb
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReportToolCore\bin\Release\DDRReportToolCore.xml
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReportToolCore\obj\Release\DDRReportToolCore.vbprojResolveAssemblyReference.cache
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReportToolCore\obj\Release\DDRReportToolCore.Resources.resources
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReportToolCore\obj\Release\DDRReportToolCore.vbproj.GenerateResource.Cache
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReportToolCore\obj\Release\DDRReportToolCore.dll

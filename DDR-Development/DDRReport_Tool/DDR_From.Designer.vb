@@ -443,6 +443,10 @@ Partial Class DDR_From
         Me.TextBox148 = New System.Windows.Forms.TextBox()
         Me.DDRUpdateChecker = New System.Windows.Forms.Timer(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.lbl_f1supername = New System.Windows.Forms.Label()
+        Me.txt_f1supername = New System.Windows.Forms.TextBox()
+        Me.lbl_f1superint = New System.Windows.Forms.Label()
+        Me.txt_f1superintname = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.tp_DDR_Header.SuspendLayout()
         Me.tp_DDRHrs.SuspendLayout()
@@ -3893,6 +3897,10 @@ Partial Class DDR_From
         '
         'tb_DeparmentAct
         '
+        Me.tb_DeparmentAct.Controls.Add(Me.txt_f1superintname)
+        Me.tb_DeparmentAct.Controls.Add(Me.lbl_f1superint)
+        Me.tb_DeparmentAct.Controls.Add(Me.txt_f1supername)
+        Me.tb_DeparmentAct.Controls.Add(Me.lbl_f1supername)
         Me.tb_DeparmentAct.Controls.Add(Me.dgv_WorkOrders)
         Me.tb_DeparmentAct.Controls.Add(Me.Label173)
         Me.tb_DeparmentAct.Controls.Add(Me.Label172)
@@ -4382,6 +4390,42 @@ Partial Class DDR_From
         'Timer1
         '
         Me.Timer1.Interval = 180000
+        '
+        'lbl_f1supername
+        '
+        Me.lbl_f1supername.AutoSize = True
+        Me.lbl_f1supername.Location = New System.Drawing.Point(187, 21)
+        Me.lbl_f1supername.Name = "lbl_f1supername"
+        Me.lbl_f1supername.Size = New System.Drawing.Size(103, 13)
+        Me.lbl_f1supername.TabIndex = 8
+        Me.lbl_f1supername.Text = "F1 Supervisor Name"
+        Me.lbl_f1supername.Visible = False
+        '
+        'txt_f1supername
+        '
+        Me.txt_f1supername.Location = New System.Drawing.Point(291, 18)
+        Me.txt_f1supername.Name = "txt_f1supername"
+        Me.txt_f1supername.Size = New System.Drawing.Size(125, 20)
+        Me.txt_f1supername.TabIndex = 9
+        Me.txt_f1supername.Visible = False
+        '
+        'lbl_f1superint
+        '
+        Me.lbl_f1superint.AutoSize = True
+        Me.lbl_f1superint.Location = New System.Drawing.Point(419, 21)
+        Me.lbl_f1superint.Name = "lbl_f1superint"
+        Me.lbl_f1superint.Size = New System.Drawing.Size(125, 13)
+        Me.lbl_f1superint.TabIndex = 10
+        Me.lbl_f1superint.Text = "F1 Superintendent Name"
+        Me.lbl_f1superint.Visible = False
+        '
+        'txt_f1superintname
+        '
+        Me.txt_f1superintname.Location = New System.Drawing.Point(544, 18)
+        Me.txt_f1superintname.Name = "txt_f1superintname"
+        Me.txt_f1superintname.Size = New System.Drawing.Size(142, 20)
+        Me.txt_f1superintname.TabIndex = 11
+        Me.txt_f1superintname.Visible = False
         '
         'DDR_From
         '
@@ -4905,4 +4949,8 @@ Partial Class DDR_From
     Friend WithEvents Label184 As System.Windows.Forms.Label
     Friend WithEvents txtRigwash As System.Windows.Forms.TextBox
     Friend WithEvents Label186 As System.Windows.Forms.Label
+    Friend WithEvents txt_f1superintname As System.Windows.Forms.TextBox
+    Friend WithEvents lbl_f1superint As System.Windows.Forms.Label
+    Friend WithEvents txt_f1supername As System.Windows.Forms.TextBox
+    Friend WithEvents lbl_f1supername As System.Windows.Forms.Label
 End Class

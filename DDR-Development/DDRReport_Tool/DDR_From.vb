@@ -202,6 +202,11 @@ Public Class DDR_From
                 Button2.Visible = False
                 Button3.Visible = False
                 Button4.Visible = False
+            Case "Administrator"
+                lbl_f1superint.Visible = True
+                lbl_f1supername.Visible = True
+                txt_f1superintname.Visible = True
+                txt_f1supername.Visible = True
         End Select
     End Sub
 
@@ -505,12 +510,20 @@ Public Class DDR_From
         dgv_LogTranLogBoat.Columns(1).Name = "Log Spanish"
         dgv_LogTranLogBoat.Columns(2).Name = "ID"
 
+        'Modificado 22-Sep-2016
+        'Agregar opcion para que exporte al reporte F1
+        Dim chk_ToF1 As New DataGridViewCheckBoxColumn
+        'chk_ToF1.Width = 15
+        chk_ToF1.Name = "To F1"
+        dgv_LogTranLogBoat.Columns.Add(chk_ToF1)
+
         Dim row As String()
         row = New String() {"", "", ""}
         dgv_LogTranLogBoat.Rows.Add(row)
         dgv_LogTranLogBoat.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgv_LogTranLogBoat.Columns(2).ReadOnly = True
-        dgv_LogTranLogBoat.Columns(2).Width = 35
+        dgv_LogTranLogBoat.Columns(2).Width = 45
+        dgv_LogTranLogBoat.Columns(3).Width = 35
 
         dgv_LogTranLogHeli.ColumnCount = 3
         dgv_LogTranLogHeli.Columns(0).Name = "Log"
@@ -520,7 +533,13 @@ Public Class DDR_From
         dgv_LogTranLogHeli.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgv_LogTranLogHeli.Columns(2).ReadOnly = True
         dgv_LogTranLogHeli.Columns(2).Width = 35
-
+        'Modificado 22-Sep-2016
+        'Agregar opcion para que exporte al reporte F1
+        Dim chk_ToF12 As New DataGridViewCheckBoxColumn
+        'chk_ToF12.Width = 15
+        chk_ToF12.Name = "To F1"
+        dgv_LogTranLogHeli.Columns.Add(chk_ToF12)
+        dgv_LogTranLogHeli.Columns(3).Width = 35
     End Sub
 
     Public Sub LoadUrgentMrs()
@@ -2006,6 +2025,11 @@ Public Class DDR_From
                 txtECD12.Text = _DDR.DDRReport.DrillString_ECD12
                 txtECD24.Text = _DDR.DDRReport.DrillString_ECD24
 
+                'Modificado 22-Sep-2017
+                'Se agrego los campos de F1SupervisorName  y F1RigSuperintName 
+                ' Se agregaron los controles de text para estas variables
+                txt_f1supername.Text = _DDR.DDRReport.F1SupervisorName
+                txt_f1superintname.Text = _DDR.DDRReport.F1RigSuperintName
 
                 If Not IsNothing(_DDR.DDRReport.MarineInfo) Then
 
@@ -2230,10 +2254,10 @@ Public Class DDR_From
                         'Dim row As String()
                         Select Case item.Type
                             Case "Boat"
-                                row = New String() {item.Log, item.LogEsp, item.LTID}
+                                row = New String() {item.Log, item.LogEsp, item.LTID, item.ToF1}
                                 dgv_LogTranLogBoat.Rows.Add(row)
                             Case "Helicopter"
-                                row = New String() {item.Log, item.LogEsp, item.LTID}
+                                row = New String() {item.Log, item.LogEsp, item.LTID, item.ToF1}
                                 dgv_LogTranLogHeli.Rows.Add(row)
                         End Select
                     Next
@@ -4134,6 +4158,10 @@ Public Class DDR_From
         tl.Log = dgv_LogTranLogBoat.Rows(e.RowIndex).Cells(0).Value
         tl.LogEsp = dgv_LogTranLogBoat.Rows(e.RowIndex).Cells(1).Value
         tl.Type = "Boat"
+        'Modificado 22-Sep-2017
+        'Agrega la columna To F1
+        Dim chk_c As DataGridViewCheckBoxCell = dgv_LogTranLogBoat.Rows(e.RowIndex).Cells(3)
+        tl.ToF1 = chk_c.Value
 
         If dgv_LogTranLogBoat.Rows(e.RowIndex).Cells(0).Value <> "" Then
             If IsNothing(dgv_LogTranLogBoat.Rows(e.RowIndex).Cells(2).Value) Then
@@ -4157,6 +4185,10 @@ Public Class DDR_From
         tl.Log = dgv_LogTranLogHeli.Rows(e.RowIndex).Cells(0).Value
         tl.LogEsp = dgv_LogTranLogHeli.Rows(e.RowIndex).Cells(1).Value
         tl.Type = "Helicopter"
+        'Modificado 22-Sep-2017
+        'Agrega la columna To F1
+        Dim chk_c As DataGridViewCheckBoxCell = dgv_LogTranLogHeli.Rows(e.RowIndex).Cells(3)
+        tl.ToF1 = chk_c.Value
 
         If dgv_LogTranLogHeli.Rows(e.RowIndex).Cells(0).Value <> "" Then
             If IsNothing(dgv_LogTranLogHeli.Rows(e.RowIndex).Cells(2).Value) Then
@@ -4252,6 +4284,36 @@ Public Class DDR_From
 
 
     Private Sub dgv_BITS_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_BITS.CellEndEdit
+
+    End Sub
+
+    Private Sub txt_f1supername_Leave(sender As Object, e As EventArgs) Handles txt_f1supername.Leave
+        If txt_f1superintname.Text = "" Then
+
+        Else
+            Dim ADODDR As New com.ADO.ADODDR
+            _DDR.DDRReport.F1SupervisorName = txt_f1supername.Text
+            Try
+                ADODDR.UpdateF1SupervisorName(_DDR.DDRReport.DDR_Report_ID, _DDR.DDRReport.F1SupervisorName)
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+            End Try
+
+        End If
+    End Sub
+
+    Private Sub txt_f1superintname_Leave(sender As Object, e As EventArgs) Handles txt_f1superintname.Leave
+        If txt_f1superintname.Text = "" Then
+        Else
+            Try
+                Dim ADODDR As New com.ADO.ADODDR
+                _DDR.DDRReport.F1RigSuperintName = txt_f1superintname.Text
+                ADODDR.UpdateF1SuperintendentName(_DDR.DDRReport.DDR_Report_ID, _DDR.DDRReport.F1RigSuperintName)
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+            End Try
+
+        End If
 
     End Sub
 End Class

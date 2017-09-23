@@ -99,6 +99,28 @@ Namespace com.entities
         Private _DrillString_ECD12 As String
         Private _DrillString_ECD24 As String
 
+        'Modficado 22-Sep-2017
+        ' Agregar campos para el reporte F1
+        Private _F1SupervisorName As String
+        Private _F1RigSuperintName As String
+
+        Public Property F1SupervisorName As String
+            Get
+                Return _F1SupervisorName
+            End Get
+            Set(value As String)
+                _F1SupervisorName = value
+            End Set
+        End Property
+
+        Public Property F1RigSuperintName As String
+            Get
+                Return _F1RigSuperintName
+            End Get
+            Set(value As String)
+                _F1RigSuperintName = value
+            End Set
+        End Property
 
         Public Property DrillString_ECD24() As String
             Get

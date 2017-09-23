@@ -7,6 +7,20 @@ Namespace com.entities
         Private _Type As String
         Private _Log As String
         Private _LogEsp As String
+        'Agregado 21-Sep-2017
+        'Opcion para agregar registro al Reporte F1
+        Private _ToF1 As Boolean
+
+        Public Property ToF1() As Boolean
+            Get
+                Return _ToF1
+            End Get
+            Set(value As Boolean)
+                _ToF1 = value
+            End Set
+        End Property
+
+
 
         Public Property LogEsp() As String
             Get

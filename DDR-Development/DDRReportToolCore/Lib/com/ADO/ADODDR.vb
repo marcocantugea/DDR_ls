@@ -1287,6 +1287,9 @@ Namespace com.ADO
                                             If member.PropertyType.Name = "Int32" Then
                                                 member.SetValue(logtransit, Integer.Parse(row(member.Name)), Nothing)
                                             End If
+                                            If member.PropertyType.Name = "Boolean" Then
+                                                member.SetValue(logtransit, Boolean.Parse(row(member.Name)), Nothing)
+                                            End If
                                         End If
                                     End If
                                 End If
@@ -1635,6 +1638,37 @@ Namespace com.ADO
                 Throw
             Finally
                 CloseDB()
+            End Try
+        End Sub
+
+        'Modificacion 22-Sep-2017
+        'Actualizar El nombre del supervisor en la base de datos para imprimirlo en 
+        ' el reporte
+        Public Sub UpdateF1SupervisorName(DDRReportID As Integer, Supervisorname As String)
+            Try
+                OpenDB("DB-DDR")
+                connection.Command = New OleDb.OleDbCommand("Update DDR_Report set  F1SupervisorName='" & Supervisorname & "' where DDR_Report_ID=" & DDRReportID.ToString, connection.Connection)
+                connection.Command.ExecuteNonQuery()
+            Catch ex As Exception
+                Throw
+            Finally
+                CloseDB()
+
+            End Try
+        End Sub
+        'Modificacion 22-Sep-2017
+        'Actualizar El nombre del superintendente en la base de datos para imprimirlo en 
+        ' el reporte
+        Public Sub UpdateF1SuperintendentName(DDRReportID As Integer, name As String)
+            Try
+                OpenDB("DB-DDR")
+                connection.Command = New OleDb.OleDbCommand("Update DDR_Report set  F1RigSuperintName='" & name & "' where DDR_Report_ID=" & DDRReportID.ToString, connection.Connection)
+                connection.Command.ExecuteNonQuery()
+            Catch ex As Exception
+                Throw
+            Finally
+                CloseDB()
+
             End Try
         End Sub
 

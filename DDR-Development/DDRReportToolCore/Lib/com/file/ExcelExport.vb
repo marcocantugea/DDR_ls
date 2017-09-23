@@ -1788,9 +1788,9 @@ Namespace com.file
                 End If
             End If
 
-            'Celdas donde empieza las WO correctivas solo 8 renglones
+            'Celdas donde empieza las WO correctivas solo 12 renglones
             Dim c_row As Integer = 22
-            Dim p_row As Integer = 31
+            Dim p_row As Integer = 35
 
             If Not IsNothing(DDR.DDRReport.Activities) Then
 
@@ -1806,8 +1806,11 @@ Namespace com.file
                             End If
                             xlSheet.Cells(c_row, 14).value = item.WONumber
                             c_row = c_row + 1
-                            If c_row >= 30 Then
-                                c_row = 29
+                            'Modifacion 21-Sep-2017 agregar 4 filas mas
+                            'If c_row >= 30 Then
+                            If c_row >= 34 Then
+                                'c_row = 29
+                                c_row = 33
                             End If
                         End If
                         If item.WOPreventive Then
@@ -1818,17 +1821,22 @@ Namespace com.file
                             End If
                             xlSheet.Cells(p_row, 14).value = item.WONumber
                             p_row = p_row + 1
-                            If p_row > 38 Then
-                                p_row = 38
+                            'Modifacion 21-Sep-2017 agregar 4 filas mas
+                            'If p_row > 38 Then
+                            If p_row > 46 Then
+                                ' p_row = 38
+                                p_row = 46
                             End If
                         End If
                     End If
                 Next
 
+                'Modificado 21-Sep-2017 
+                ' Remover nota diesel
                 'Imprime el dato de disel
-                If Not IsNothing(DDR.DDRReport.MarineInfo) Then
-                    xlSheet.Cells(43, 2).value = "NOTE: " & DDR.DDRReport.MarineInfo.TodayStock_Diesel & " M3 OF DIESEL FUEL ONBOARD."
-                End If
+                'If Not IsNothing(DDR.DDRReport.MarineInfo) Then
+                '    xlSheet.Cells(43, 2).value = "NOTE: " & DDR.DDRReport.MarineInfo.TodayStock_Diesel & " M3 OF DIESEL FUEL ONBOARD."
+                'End If
 
                 'Imprime el dato de Drill warte y pot water
                 If Not IsNothing(DDR.DDRReport.MarineInfo) Then
@@ -1840,8 +1848,34 @@ Namespace com.file
                     xlSheet.Cells(47, 5).value = DDR.DDRReport.MarineInfo.TodayStock_PotWater
                 End If
 
+                'Modificado 22-Sep-2017
+                'Agrega la parte del reporte de F1 movimientos logisticos
+                Dim l_row As Integer = 48
+                If Not IsNothing(DDR.DDRReport.LogisticTransitLog) Then
+                    For Each item As com.entities.LogisticTransitLog In DDR.DDRReport.LogisticTransitLog.items
+                        If item.ToF1 Then
+                            If lenguaje = "ENG" Then
+                                xlSheet.Cells(l_row, 2).value = item.Log
+                            Else
+                                xlSheet.Cells(l_row, 2).value = item.LogEsp
+                            End If
+                            l_row = l_row + 1
+                            If l_row > 51 Then
+                                l_row = 51
+                            End If
+                        End If
+                    Next
+                End If
+
             End If
 
+            'Modificado el 22-Sep-2017
+            'Se Agrego la parte para imprimir el nombre en el reporte de supervisores
+
+            'Imprime el nombre del supervisor de contrato
+            xlSheet.Cells(61, 2).value = DDR.DDRReport.F1SupervisorName
+            'Imprime el nombre del rig sup en el reporte
+            xlSheet.Cells(61, 10).value = DDR.DDRReport.F1RigSuperintName
 
         End Sub
 
