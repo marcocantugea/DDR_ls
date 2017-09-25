@@ -1840,12 +1840,12 @@ Namespace com.file
 
                 'Imprime el dato de Drill warte y pot water
                 If Not IsNothing(DDR.DDRReport.MarineInfo) Then
-                    xlSheet.Cells(46, 5).value = DDR.DDRReport.MarineInfo.TodayStock_DrillWater
+                    xlSheet.Cells(56, 5).value = DDR.DDRReport.MarineInfo.TodayStock_DrillWater
                 End If
 
                 'Imprime el dato de Drill warte y pot water
                 If Not IsNothing(DDR.DDRReport.MarineInfo) Then
-                    xlSheet.Cells(47, 5).value = DDR.DDRReport.MarineInfo.TodayStock_PotWater
+                    xlSheet.Cells(57, 5).value = DDR.DDRReport.MarineInfo.TodayStock_PotWater
                 End If
 
                 'Modificado 22-Sep-2017
