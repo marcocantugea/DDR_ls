@@ -1,11 +1,19 @@
 ﻿Imports DDRReportToolCore
 Imports System.Globalization
-
+Imports System.IO
 
 Public Class DDR_Main
 
     Private _SessionUser As com.entities.SessionUser
-    
+    ''Agregado el 25 Mayo 2018
+    '' Iniciar una applicacion externa al abrir el ddr
+    Private _RunAppStartUp As Boolean = False
+    Private _PathStartupApp As String
+    Private _StartUpApp As String
+    Private _TempFolderStartUpApp As String
+    Private WithEvents ProcessApp As Process
+
+
     Public Property user() As com.entities.SessionUser
         Get
             Return _SessionUser
@@ -281,6 +289,52 @@ Public Class DDR_Main
         dgv_ControlDDR.Rows(dgv_ControlDDR.Rows.Count - 1).Selected = True
         dgv_ControlDDR.FirstDisplayedScrollingRowIndex = dgv_ControlDDR.Rows.Count - 1
         timerMaintMode.Start()
+
+        ''Agregado el 25 Mayo 2018
+        '' Carga los parametros de app.config para las variables de la app
+        Try
+            _RunAppStartUp = Boolean.Parse(System.Configuration.ConfigurationSettings.AppSettings("RunAppStartUp"))
+            _PathStartupApp = System.Configuration.ConfigurationSettings.AppSettings("PathStartupApp")
+            _StartUpApp = System.Configuration.ConfigurationSettings.AppSettings("StartUpApp")
+            _TempFolderStartUpApp = My.Computer.FileSystem.SpecialDirectories.MyDocuments & "\" & System.Configuration.ConfigurationSettings.AppSettings("TempFolderStartUpApp")
+            If _RunAppStartUp Then
+                'Hace una copia del la app en Documento de la pc en un carpeta temporal
+                'Para poder ejecutar el programa
+                If Not Directory.Exists(_TempFolderStartUpApp) Then
+                    Directory.CreateDirectory(_TempFolderStartUpApp)
+                    For Each file As IO.FileInfo In New IO.DirectoryInfo(_PathStartupApp).GetFiles
+                        If file.Name <> "Thumbs.db" Then
+                            file.CopyTo(_TempFolderStartUpApp & "\" & file.Name)
+                        End If
+                    Next
+                Else
+                    For Each file As IO.FileInfo In New IO.DirectoryInfo(_TempFolderStartUpApp).GetFiles
+                        If file.Name <> "Thumbs.db" Then
+                            System.IO.File.Delete(_TempFolderStartUpApp & "\" & file.Name)
+                        End If
+                    Next
+
+                    For Each file As IO.FileInfo In New IO.DirectoryInfo(_PathStartupApp).GetFiles
+                        If file.Name <> "Thumbs.db" Then
+                            file.CopyTo(_TempFolderStartUpApp & "\" & file.Name)
+                        End If
+                    Next
+                End If
+
+                'Corre el programa
+                ProcessApp = Process.Start(_TempFolderStartUpApp & "\" & _StartUpApp)
+                ProcessApp.WaitForExit()
+                For Each file As IO.FileInfo In New IO.DirectoryInfo(_TempFolderStartUpApp).GetFiles
+                    If file.Name <> "Thumbs.db" Then
+                        System.IO.File.Delete(_TempFolderStartUpApp & "\" & file.Name)
+                    End If
+                Next
+                System.IO.Directory.Delete(_TempFolderStartUpApp)
+            End If
+        Catch ex As Exception
+
+        End Try
+
 
     End Sub
 

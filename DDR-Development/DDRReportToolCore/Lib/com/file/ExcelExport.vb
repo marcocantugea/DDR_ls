@@ -1789,8 +1789,8 @@ Namespace com.file
             End If
 
             'Celdas donde empieza las WO correctivas solo 12 renglones
-            Dim c_row As Integer = 22
-            Dim p_row As Integer = 35
+            Dim c_row As Integer = 20
+            Dim p_row As Integer = 33
 
             If Not IsNothing(DDR.DDRReport.Activities) Then
 
@@ -1840,17 +1840,17 @@ Namespace com.file
 
                 'Imprime el dato de Drill warte y pot water
                 If Not IsNothing(DDR.DDRReport.MarineInfo) Then
-                    xlSheet.Cells(56, 5).value = DDR.DDRReport.MarineInfo.TodayStock_DrillWater
+                    xlSheet.Cells(54, 5).value = DDR.DDRReport.MarineInfo.TodayStock_DrillWater
                 End If
 
                 'Imprime el dato de Drill warte y pot water
                 If Not IsNothing(DDR.DDRReport.MarineInfo) Then
-                    xlSheet.Cells(57, 5).value = DDR.DDRReport.MarineInfo.TodayStock_PotWater
+                    xlSheet.Cells(55, 5).value = DDR.DDRReport.MarineInfo.TodayStock_PotWater
                 End If
 
                 'Modificado 22-Sep-2017
                 'Agrega la parte del reporte de F1 movimientos logisticos
-                Dim l_row As Integer = 48
+                Dim l_row As Integer = 46
                 If Not IsNothing(DDR.DDRReport.LogisticTransitLog) Then
                     For Each item As com.entities.LogisticTransitLog In DDR.DDRReport.LogisticTransitLog.items
                         If item.ToF1 Then
@@ -1873,9 +1873,9 @@ Namespace com.file
             'Se Agrego la parte para imprimir el nombre en el reporte de supervisores
 
             'Imprime el nombre del supervisor de contrato
-            xlSheet.Cells(61, 2).value = DDR.DDRReport.F1SupervisorName
+            xlSheet.Cells(60, 2).value = DDR.DDRReport.F1SupervisorName
             'Imprime el nombre del rig sup en el reporte
-            xlSheet.Cells(61, 10).value = DDR.DDRReport.F1RigSuperintName
+            xlSheet.Cells(60, 10).value = DDR.DDRReport.F1RigSuperintName
 
         End Sub
 

@@ -637,7 +637,12 @@ Namespace com.ADO
             Try
                 OpenDB("DB-DDR")
                 connection.Command = New OleDb.OleDbCommand("select max(DDRID) from DDR_CONTROL where Well='" & Well & "'", connection.Connection)
-                result = connection.Command.ExecuteScalar()
+                If Not IsDBNull(connection.Command.ExecuteScalar()) Then
+                    result = connection.Command.ExecuteScalar()
+                Else
+                    result = 1
+                End If
+
             Catch ex As Exception
                 Throw
             Finally
