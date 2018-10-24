@@ -30,3 +30,4 @@ C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Rele
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.exe
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.xml
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.pdb
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\MySql.Data.dll

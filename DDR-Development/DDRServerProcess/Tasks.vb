@@ -12,10 +12,10 @@
         Console.WriteLine("************************************************")
         Console.WriteLine("Task Lock DDR's more than 2 days")
         Dim ddrs As New DDRReportToolCore.com.entities.DDRControl_Collection
-        Dim _ADODDR As DDRReportToolCore.com.ADO.ADODDR
+        Dim _ADODDR As DDRReportToolCore.com.ADO.ADOMySQLDDR
         Dim lockeddrs As String = ""
         Try
-            _ADODDR = New DDRReportToolCore.com.ADO.ADODDR
+            _ADODDR = New DDRReportToolCore.com.ADO.ADOMySQLDDR
             _ADODDR.GetDDRControlHeader(ddrs)
         Catch ex As Exception
             WriteLog(ex.Message, EventLogEntryType.Error)
@@ -24,7 +24,7 @@
 
         For Each item As DDRReportToolCore.com.entities.DDRControl In ddrs.Items
             'Console.WriteLine(item.ReportDate.ToString("yyyy-MM-dd") & " <=" & DateAdd(DateInterval.Day, -2, Date.Now).ToString("yyyy-MM-dd"))
-            If item.ReportDate <= DateAdd(DateInterval.Day, -2, Date.Now) And item.Lock = False Then
+            If item.ReportDate <= DateAdd(DateInterval.Day, -2, Date.Now) And item.Locked = False Then
                 Console.WriteLine("Locking DDR Num." & item.DDRID)
                 Try
                     _ADODDR.LockReprot(item.DDRID)

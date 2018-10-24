@@ -6,7 +6,7 @@ Namespace com.entities
         Private _DDRID As Integer = -1
         Private _ReportDate As Date
         Private _Description As String
-        Private _Lock As Boolean
+        Private _Locked As Boolean
         Private _Active As Boolean
         Private _ReportNo As Integer
         Private _LastUpdate As Date
@@ -78,12 +78,12 @@ Namespace com.entities
             End Set
         End Property
 
-        Public Property Lock() As Boolean
+        Public Property Locked() As Boolean
             Get
-                Return _Lock
+                Return _Locked
             End Get
             Set(ByVal value As Boolean)
-                _Lock = value
+                _Locked = value
             End Set
         End Property
 

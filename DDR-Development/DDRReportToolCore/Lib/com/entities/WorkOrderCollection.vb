@@ -4,7 +4,7 @@
 
         Private position As Integer = -1
         Private _Items As New List(Of WorkOrder)
-        Private _ADODDR As New ADO.ADODDR
+        Private _ADODDR As New ADO.ADOMySQLDDR
 
         Public ReadOnly Property items() As List(Of WorkOrder)
             Get

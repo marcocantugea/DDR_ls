@@ -584,6 +584,13 @@ Public Class DDR_From
         dgv_WorkOrders.Columns(5).Width = 30
         dgv_WorkOrders.Columns(0).Width = 30
         dgv_WorkOrders.Columns(1).Width = 30
+
+        'Agregado el dia 3-Sep-2018
+        'Agregar la funcinoalidad  de desplazar texto a la siguiente linea
+        dgv_WorkOrders.RowsDefaultCellStyle.WrapMode = DataGridViewTriState.True
+
+
+
         'Agregado el dia 5 Agosto 2017
         'Agregar funcionalidad para llenar F1
 
@@ -619,7 +626,7 @@ Public Class DDR_From
 
         Select Case _FormMode
             Case FormModes.Insert
-                Dim adoDDr As New com.ADO.ADODDR
+                Dim adoDDr As New com.ADO.ADOMySQLDDR
 
                 Try
                     LoadDataToMem()
@@ -631,12 +638,12 @@ Public Class DDR_From
                     MsgBox(ex.Message.ToString, MsgBoxStyle.Critical, "DDR Error")
                 End Try
 
-                Dim ado As New com.ADO.ADODDR
+                Dim ado As New com.ADO.ADOMySQLDDR
                 'SaveActivityOnMemory()
                 'ado.SaveActivities(_DDR)
 
             Case FormModes.Edit
-                Dim adoDDr As New com.ADO.ADODDR
+                Dim adoDDr As New com.ADO.ADOMySQLDDR
                 ''MsgBox(_DDR.DDRID)
                 Dim selectedTabName As String
                 selectedTabName = TabControl1.SelectedTab.Name
@@ -952,7 +959,7 @@ Public Class DDR_From
                 End Try
 
 
-                Dim ado As New com.ADO.ADODDR
+                Dim ado As New com.ADO.ADOMySQLDDR
                 'SaveActivityOnMemory()
                 'ado.ModifyActivities(_DDR)
 
@@ -2628,7 +2635,7 @@ Public Class DDR_From
         End If
     End Sub
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         If Not IsNothing(_DDR) Then
             ado.LockReprot(_DDR.DDRID)
             LockForm()
@@ -2637,7 +2644,7 @@ Public Class DDR_From
     End Sub
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         If Not IsNothing(_DDR) Then
             ado.UnlockReprot(_DDR.DDRID)
             UnlockForm()
@@ -2755,7 +2762,7 @@ Public Class DDR_From
         ' for urgent mrs
         dgv_UrgentsMRs.Rows.Clear()
         Dim deparmentid As Integer
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         deparmentid = ado.GetDeparmentID(deparmentName)
         If Not IsNothing(DDRReport.DDRReport.UrgentsMR) Then
             For Each item As com.entities.UrgentMRs In _DDR.DDRReport.UrgentsMR.items
@@ -2812,7 +2819,7 @@ Public Class DDR_From
         Dim emailstonotify As New com.Notifier.Email.EmailObjCollection
         Dim templatemessage As New com.Notifier.Email.EmailObj
         Dim emailsender As New com.Notifier.Email.EmailSender
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         templatemessage.Body = "the user: " & _SessionUser.User & " is notifying that the activy report is completed, please check the DDR System for more detail"
         templatemessage.Subject = "user " & _SessionUser.User & " has finished the activity report"
         ado.PrepareNotification(emailstonotify, templatemessage, _SessionUser.email)
@@ -2937,7 +2944,7 @@ Public Class DDR_From
                     End If
                 End If
 
-                Dim ado As New com.ADO.ADODDR
+                Dim ado As New com.ADO.ADOMySQLDDR
 
                 If dgv_DDRHrs.Rows(e.RowIndex).Cells(0).Value <> "" Or dgv_DDRHrs.Rows(e.RowIndex).Cells(4).Value <> "" Then
                     If IsNothing(dgv_DDRHrs.Rows(e.RowIndex).Cells(6).Value) Or dgv_DDRHrs.Rows(e.RowIndex).Cells(6).Value = "-1" Then
@@ -3221,7 +3228,7 @@ Public Class DDR_From
         ' modificar el objeto en el model
         ' modificar el objeto en la base de datos
         Dim deparmentid As Integer
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         If dgv_activities.Rows(e.RowIndex).Cells(0).Value <> "" Or dgv_activities.Rows(e.RowIndex).Cells(1).Value <> "" Then
             If IsNothing(dgv_activities.Rows(e.RowIndex).Cells(2).Value) Then
                 deparmentid = ado.GetDeparmentID(ComboBox1.Text)
@@ -3249,7 +3256,7 @@ Public Class DDR_From
 
     Private Sub dgv_activities_UserDeletedRow(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles dgv_activities.UserDeletedRow
         Dim deparmentid As Integer
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         Try
             If Not IsNothing(e.Row.Cells(2).Value) Then
                 Dim result As Integer = MsgBox("Do you want to remove the record?", MsgBoxStyle.OkCancel, "Remove record")
@@ -3271,7 +3278,7 @@ Public Class DDR_From
 
     Private Sub dgv_UrgentsMRs_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_UrgentsMRs.CellEndEdit
         Dim deparmentid As Integer
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
         If dgv_UrgentsMRs.Rows(e.RowIndex).Cells(0).Value <> "" Or dgv_UrgentsMRs.Rows(e.RowIndex).Cells(1).Value <> "" Or dgv_UrgentsMRs.Rows(e.RowIndex).Cells(2).Value <> "" Or dgv_UrgentsMRs.Rows(e.RowIndex).Cells(3).Value <> "" Then
             If IsNothing(dgv_UrgentsMRs.Rows(e.RowIndex).Cells(4).Value) Then
@@ -3303,7 +3310,7 @@ Public Class DDR_From
 
     Private Sub dgv_WorkOrders_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_WorkOrders.CellEndEdit
         Dim deparmentid As Integer
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
         If dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value <> "" Or dgv_WorkOrders.Rows(e.RowIndex).Cells(3).Value <> "" Then
 
@@ -3342,7 +3349,7 @@ Public Class DDR_From
 
     Private Sub dgv_WorkOrders_UserDeletedRow(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles dgv_WorkOrders.UserDeletedRow
         Dim deparmentid As Integer
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         Try
             If Not IsNothing(e.Row.Cells(5).Value) Then
                 Dim result As Integer = MsgBox("Do you want to remove the record?", MsgBoxStyle.OkCancel, "Remove record")
@@ -3363,7 +3370,7 @@ Public Class DDR_From
 
 
     Private Sub dgv_UrgentsMRs_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgv_UrgentsMRs.KeyDown
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         Dim deparmentid As Integer
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
         If e.KeyCode = Keys.F3 Then
@@ -3423,7 +3430,7 @@ Public Class DDR_From
         If response = vbYes Then
             Dim selectedcell As DataGridViewCell
             selectedcell = dgv_DDRHrs.CurrentCell
-            Dim ado As New com.ADO.ADODDR
+            Dim ado As New com.ADO.ADOMySQLDDR
             Dim ddrhrs As New com.entities.DDRHrs
             ddrhrs.Detail_HR_ID = dgv_DDRHrs.Rows(selectedcell.RowIndex).Cells(6).Value
             ado.DeleteDDHrs(ddrhrs)
@@ -3433,7 +3440,7 @@ Public Class DDR_From
     End Sub
 
     Private Sub dgv_DDRHrs_UserDeletedRow(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles dgv_DDRHrs.UserDeletedRow
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         Dim ddrhrs As New com.entities.DDRHrs
         ddrhrs.Detail_HR_ID = e.Row.Cells(6).Value
         ado.DeleteDDHrs(ddrhrs)
@@ -3443,7 +3450,7 @@ Public Class DDR_From
         Dim response As Integer
         response = MsgBox("Do you want to delete the row?", MsgBoxStyle.YesNo)
         If response = vbYes Then
-            Dim ado As New com.ADO.ADODDR
+            Dim ado As New com.ADO.ADOMySQLDDR
             Dim bits As New com.entities.BITS
             bits.BITS_ID = e.Row.Cells(11).Value
             ado.DeleteBITS(bits)
@@ -3455,7 +3462,7 @@ Public Class DDR_From
         Dim response As Integer
         response = MsgBox("Do you want to delete the row?", MsgBoxStyle.YesNo)
         If response = vbYes Then
-            Dim ado As New com.ADO.ADODDR
+            Dim ado As New com.ADO.ADOMySQLDDR
             Dim shaker As New com.entities.Shakers
             shaker.Shakers_ID = e.Row.Cells(11).Value
             ado.DeleteShaker(shaker)
@@ -3467,7 +3474,7 @@ Public Class DDR_From
         Dim response As Integer
         response = MsgBox("Do you want to delete the row?", MsgBoxStyle.YesNo)
         If response = vbYes Then
-            Dim ado As New com.ADO.ADODDR
+            Dim ado As New com.ADO.ADOMySQLDDR
             Dim mud As New com.entities.Mud
             mud.MUD_ID = e.Row.Cells(12).Value
             ado.DeleteMud(mud)
@@ -3479,7 +3486,7 @@ Public Class DDR_From
         Dim response As Integer
         response = MsgBox("Do you want to delete the row?", MsgBoxStyle.YesNo)
         If response = vbYes Then
-            Dim ado As New com.ADO.ADODDR
+            Dim ado As New com.ADO.ADOMySQLDDR
             Dim UrgentMR As New com.entities.UrgentMRs
             UrgentMR.MRUrgentID = e.Row.Cells(4).Value
             ado.DeleteUrgentMR(UrgentMR)
@@ -3496,7 +3503,7 @@ Public Class DDR_From
     End Sub
 
     Private Sub DDRUpdateChecker_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DDRUpdateChecker.Tick
-        Dim adoddr As New com.ADO.ADODDR
+        Dim adoddr As New com.ADO.ADOMySQLDDR
         Dim lastddrupdate As New Date
 
         If Not _FormMode = FormModes.View Then
@@ -3509,7 +3516,7 @@ Public Class DDR_From
                 DDRUpdateChecker.Enabled = False
 
                 'Dim res As Integer = MsgBox("A new version of DDR was detected, the aplication will update the information and keep all the changes made it on the report", MsgBoxStyle.Question, "Updated version of DDR")
-                Dim ado As New com.ADO.ADODDR
+                Dim ado As New com.ADO.ADOMySQLDDR
                 _DDR = ado.GetCompleteDDRReport(_DDR.DDRID)
                 _DDROpenDate = _DDR.LastUpdate
                 FillForm(TabControl1.SelectedTab.Name)
@@ -3901,7 +3908,7 @@ Public Class DDR_From
     End Sub
 
     Private Sub dgv_PUMR_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_PUMR.CellEndEdit
-        Dim ado As New DDRReportToolCore.com.ADO.ADODDR
+        Dim ado As New DDRReportToolCore.com.ADO.ADOMySQLDDR
 
         If IsNothing(dgv_PUMR.Rows(e.RowIndex).Cells(4).Value) Then
             If dgv_PUMR.Rows(e.RowIndex).Cells(0).Value <> "" Or dgv_PUMR.Rows(e.RowIndex).Cells(1).Value <> "" Then
@@ -3937,7 +3944,7 @@ Public Class DDR_From
     End Sub
 
     Private Sub dgv_PUMR_UserDeletedRow(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles dgv_PUMR.UserDeletedRow
-        Dim ado As New DDRReportToolCore.com.ADO.ADODDR
+        Dim ado As New DDRReportToolCore.com.ADO.ADOMySQLDDR
         Try
             If Not IsNothing(e.Row.Cells(4).Value) Then
                 Dim result As Integer = MsgBox("Do you want to remove the record?", MsgBoxStyle.OkCancel, "Remove record")
@@ -3981,7 +3988,7 @@ Public Class DDR_From
     End Function
 
     Private Sub dgv_activities_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgv_activities.KeyDown
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         Dim deparmentid As Integer
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
         If e.KeyCode = Keys.F3 Then
@@ -4062,7 +4069,7 @@ Public Class DDR_From
     End Sub
 
     Public Sub CheckInTab()
-        Dim _ado As New com.ADO.ADODDR
+        Dim _ado As New com.ADO.ADOMySQLDDR
         Dim tab_tosearch As New com.entities.SystemOpenedTab
         tab_tosearch.Active = True
         tab_tosearch.Tab_sel = TabControl1.SelectedTab.Name
@@ -4118,18 +4125,14 @@ Public Class DDR_From
 
 
     Private Sub TabControl1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TabControl1.SelectedIndexChanged
-        If TabControl1.SelectedTab.Name.Equals(tb_DeparmentAct.Name) Then
-            _SessionUser.TabController.RemoveAllItems(_SessionUser.User)
-        Else
-            CheckInTab()
-        End If
+       
 
 
     End Sub
 
     Private Sub dgv_LogTranLogBoat_UserDeletedRow(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles dgv_LogTranLogBoat.UserDeletedRow
 
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         Try
             If Not IsNothing(e.Row.Cells(2).Value) Then
                 Dim result As Integer = MsgBox("Do you want to remove the record?", MsgBoxStyle.OkCancel, "Remove record")
@@ -4150,7 +4153,7 @@ Public Class DDR_From
 
     Private Sub dgv_LogTranLogBoat_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_LogTranLogBoat.CellEndEdit
 
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         'Dim deparmentid As Integer 
 
         Dim tl As New com.entities.LogisticTransitLog
@@ -4177,7 +4180,7 @@ Public Class DDR_From
     End Sub
 
     Private Sub dgv_LogTranLogHeli_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_LogTranLogHeli.CellEndEdit
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         'Dim deparmentid As Integer 
 
         Dim tl As New com.entities.LogisticTransitLog
@@ -4204,7 +4207,7 @@ Public Class DDR_From
     End Sub
 
     Private Sub dgv_LogTranLogHeli_UserDeletedRow(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowEventArgs) Handles dgv_LogTranLogHeli.UserDeletedRow
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         Try
             If Not IsNothing(e.Row.Cells(2).Value) Then
                 Dim result As Integer = MsgBox("Do you want to remove the record?", MsgBoxStyle.OkCancel, "Remove record")
@@ -4225,7 +4228,7 @@ Public Class DDR_From
     'Funcion modificada 8-Ago-2017
     ' se modifico la funcion para cargar los nuevos campos de Correctivo,preventivo y WOtoF1
     Private Sub dgv_WorkOrders_KeyDown(sender As Object, e As KeyEventArgs) Handles dgv_WorkOrders.KeyDown
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         Dim deparmentid As Integer
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
         If e.KeyCode = Keys.F3 Then
@@ -4257,7 +4260,7 @@ Public Class DDR_From
 
     Private Sub dgv_WorkOrders_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_WorkOrders.CellContentClick
         Dim deparmentid As Integer
-        Dim ado As New com.ADO.ADODDR
+        Dim ado As New com.ADO.ADOMySQLDDR
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
         Try
             If e.ColumnIndex = 0 Or e.ColumnIndex = 1 Then
@@ -4291,7 +4294,7 @@ Public Class DDR_From
         If txt_f1superintname.Text = "" Then
 
         Else
-            Dim ADODDR As New com.ADO.ADODDR
+            Dim ADODDR As New com.ADO.ADOMySQLDDR
             _DDR.DDRReport.F1SupervisorName = txt_f1supername.Text
             Try
                 ADODDR.UpdateF1SupervisorName(_DDR.DDRReport.DDR_Report_ID, _DDR.DDRReport.F1SupervisorName)
@@ -4306,7 +4309,7 @@ Public Class DDR_From
         If txt_f1superintname.Text = "" Then
         Else
             Try
-                Dim ADODDR As New com.ADO.ADODDR
+                Dim ADODDR As New com.ADO.ADOMySQLDDR
                 _DDR.DDRReport.F1RigSuperintName = txt_f1superintname.Text
                 ADODDR.UpdateF1SuperintendentName(_DDR.DDRReport.DDR_Report_ID, _DDR.DDRReport.F1RigSuperintName)
             Catch ex As Exception
@@ -4315,6 +4318,24 @@ Public Class DDR_From
 
         End If
 
+    End Sub
+
+    Private Sub TabControl1_TabIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.TabIndexChanged
+      
+    End Sub
+
+    Private Sub TabControl1_Selected(sender As Object, e As TabControlEventArgs) Handles TabControl1.Selected
+        If TabControl1.SelectedTab.Name.Equals(tb_DeparmentAct.Name) Then
+            Try
+                _SessionUser.TabController.RemoveAllItems(_SessionUser.User)
+            Catch ex As Exception
+
+            End Try
+
+        Else
+            _SessionUser.TabController.RemoveAllItems(_SessionUser.User)
+            CheckInTab()
+        End If
     End Sub
 End Class
 Public Enum FormModes

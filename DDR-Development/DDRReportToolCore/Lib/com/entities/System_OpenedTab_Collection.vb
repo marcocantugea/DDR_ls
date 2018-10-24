@@ -4,8 +4,10 @@
 
         Private position As Integer = -1
         Private _Items As New List(Of SystemOpenedTab)
-        Private _ADODDR As New ADO.ADODDR
-
+        '20-Oct-2018
+        ' Acondicionado para MySQL
+        'Private _ADODDR As New ADO.ADODDR
+        Private _ADODDR As New ADO.ADOMySQLDDR
         Public ReadOnly Property items() As List(Of SystemOpenedTab)
             Get
                 Return _Items

@@ -4,7 +4,7 @@
 
         Private position As Integer = -1
         Private _Items As New List(Of DDRHrs)
-        Private _ADODDR As New ADO.ADODDR
+        Private _ADODDR As New ADO.ADOMySQLDDR
 
         Public ReadOnly Property Items() As List(Of DDRHrs)
             Get

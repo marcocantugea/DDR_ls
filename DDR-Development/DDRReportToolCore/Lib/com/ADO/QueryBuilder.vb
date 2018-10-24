@@ -70,17 +70,32 @@ Namespace com.ADO
                             Case "DateTime"
                                 If Not CType(member.GetValue(_Entity, Nothing), Date).ToString("mmddyyyy").Equals("00010001") Then
                                     _Fields.Add(member.Name)
-                                    Dim v As String = member.GetValue(_Entity, Nothing)
-                                    _Values.Add("'" & v & "'")
+                                    '20-Oct-2018
+                                    'Modificado para usar MYSQL
+                                    'Dim v As String = member.GetValue(_Entity, Nothing)
+                                    '_Values.Add("'" & v & "'")
+                                    Dim v As Date = CType(member.GetValue(_Entity, Nothing), Date)
+                                    _Values.Add("'" & v.ToString("yyyy-MM-dd hh:mm:ss") & "'")
                                 End If
                             Case "Boolean"
                                 'Fix the problem with a false value is entered - 6-Ago-2017
                                 'remove if condition to validate if is true value
                                 'If CType(member.GetValue(_Entity, Nothing), Boolean) Then
+
+                                '21-Oct-2018
+                                'Aconidicionar insert para mysql
                                 _Fields.Add(member.Name)
                                 Dim v As String = member.GetValue(_Entity, Nothing)
-                                _Values.Add(v)
+                                If v Then
+                                    _Values.Add("1")
+                                Else
+                                    _Values.Add("0")
+                                End If
+
                                 'End If
+
+
+
                         End Select
                     End If
                 End If
@@ -143,8 +158,12 @@ Namespace com.ADO
                                 If Not member.Name.Equals(IDParameter) Then
                                     If Not CType(member.GetValue(_Entity, Nothing), Date).ToString("mmddyyyy").Equals("00010001") Then
                                         _Fields.Add(member.Name)
-                                        Dim v As String = member.GetValue(_Entity, Nothing)
-                                        _Values.Add("'" & v & "'")
+                                        '20-Oct-2018
+                                        'Modificado para usar MYSQL
+                                        'Dim v As String = member.GetValue(_Entity, Nothing)
+                                        '_Values.Add("'" & v & "'")
+                                        Dim v As Date = CType(member.GetValue(_Entity, Nothing), Date)
+                                        _Values.Add("'" & v.ToString("yyyy-MM-dd hh:mm:ss") & "'")
                                     End If
                                 End If
                             Case "Boolean"
@@ -152,9 +171,17 @@ Namespace com.ADO
                                     'Fix the problem with a false value is entered - 6-Ago-2017
                                     'If CType(member.GetValue(_Entity, Nothing), Boolean) Then
                                     'remove if condition to validate if is true value
+
+                                    '21-Oct-2018
+                                    'Aconidicionado para Mysql
                                     _Fields.Add(member.Name)
                                     Dim v As String = member.GetValue(_Entity, Nothing)
-                                    _Values.Add(v)
+                                    If v Then
+                                        _Values.Add("1")
+                                    Else
+                                        _Values.Add("0")
+                                    End If
+
                                     'End If
                                 End If
                         End Select
@@ -221,9 +248,17 @@ Namespace com.ADO
                                     'Fix the problem with a false value is entered - 6-Ago-2017
                                     'remove if condition to validate if is true value
                                     'If CType(member.GetValue(_Entity, Nothing), Boolean) Then
+
+                                    '21-Oct-2018
+                                    'Acondicionado para mysql
                                     _Fields.Add(member.Name)
                                     Dim v As String = member.GetValue(_Entity, Nothing)
-                                    _Values.Add(v)
+                                    If v Then
+                                        _Values.Add("1")
+                                    Else
+                                        _Values.Add("0")
+                                    End If
+
                                     'End If
                                 End If
                         End Select
@@ -268,16 +303,27 @@ Namespace com.ADO
                             Case "DateTime"
                                 If Not CType(member.GetValue(_Entity, Nothing), Date).ToString("mmddyyyy").Equals("00010001") Then
                                     _Fields.Add(member.Name)
-                                    Dim v As String = member.GetValue(_Entity, Nothing)
-                                    _Values.Add("'" & v & "'")
+                                    '20-Oct-2018
+                                    'Modificado para usar MYSQL
+                                    'Dim v As String = member.GetValue(_Entity, Nothing)
+                                    '_Values.Add("'" & v & "'")
+                                    Dim v As Date = CType(member.GetValue(_Entity, Nothing), Date)
+                                    _Values.Add("'" & v.ToString("yyyy-MM-dd hh:mm:ss") & "'")
                                 End If
                             Case "Boolean"
                                 'Fix the problem with a false value is entered - 6-Ago-2017
                                 'remove if condition to validate if is true value
                                 'If CType(member.GetValue(_Entity, Nothing), Boolean) Then
+                                '20-Oct-2018
+                                'Modificado para usar MYSQL
                                 _Fields.Add(member.Name)
                                 Dim v As String = member.GetValue(_Entity, Nothing)
-                                _Values.Add(v)
+                                If v Then
+                                    _Values.Add("1")
+                                Else
+                                    _Values.Add("0")
+                                End If
+                                '_Values.Add(v)
                                 'End If
                         End Select
                     End If

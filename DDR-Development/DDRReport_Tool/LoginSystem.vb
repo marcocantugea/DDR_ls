@@ -18,7 +18,7 @@ Public Class LoginSystem
             If ladp.IsAuthenticated(System.Configuration.ConfigurationSettings.AppSettings("DOMAINUSERS"), UsernameTextBox.Text, PasswordTextBox.Text) Then
                 Dim sessiousera As New com.entities.SessionUser
                 sessiousera.User = UsernameTextBox.Text
-                Dim ado As New com.ADO.ADODDR
+                Dim ado As New com.ADO.ADOMySQLDDR
                 ado.GetUserGroup(sessiousera)
                 ado.GetUserDeparmentID(sessiousera)
                 ado.GetUserDeparmentName(sessiousera)

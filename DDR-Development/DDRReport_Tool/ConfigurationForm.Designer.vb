@@ -22,51 +22,52 @@ Partial Class ConfigurationForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.BrowseDataBase = New System.Windows.Forms.OpenFileDialog
-        Me.txtDataBasePath = New System.Windows.Forms.TextBox
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.txtEmailUser = New System.Windows.Forms.TextBox
-        Me.Button2 = New System.Windows.Forms.Button
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.txtEmailPass = New System.Windows.Forms.TextBox
-        Me.Button3 = New System.Windows.Forms.Button
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.txtEmailServer = New System.Windows.Forms.TextBox
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.txtPort = New System.Windows.Forms.TextBox
-        Me.Button4 = New System.Windows.Forms.Button
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.DDRTemplate = New System.Windows.Forms.OpenFileDialog
-        Me.txtDDRTemplate = New System.Windows.Forms.TextBox
-        Me.Button5 = New System.Windows.Forms.Button
-        Me.Button6 = New System.Windows.Forms.Button
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.txtActiTemplate = New System.Windows.Forms.TextBox
-        Me.Button7 = New System.Windows.Forms.Button
-        Me.Button8 = New System.Windows.Forms.Button
-        Me.ActivitiesTemplate = New System.Windows.Forms.OpenFileDialog
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.txtWellName = New System.Windows.Forms.TextBox
-        Me.Button9 = New System.Windows.Forms.Button
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.txtMaintMode = New System.Windows.Forms.TextBox
-        Me.Button10 = New System.Windows.Forms.Button
-        Me.Button11 = New System.Windows.Forms.Button
-        Me.Label11 = New System.Windows.Forms.Label
-        Me.txtLDAPServer = New System.Windows.Forms.TextBox
-        Me.Button12 = New System.Windows.Forms.Button
-        Me.Label12 = New System.Windows.Forms.Label
-        Me.txtDomain = New System.Windows.Forms.TextBox
-        Me.Button13 = New System.Windows.Forms.Button
-        Me.Button14 = New System.Windows.Forms.Button
-        Me.Button15 = New System.Windows.Forms.Button
-        Me.Button16 = New System.Windows.Forms.Button
-        Me.Button17 = New System.Windows.Forms.Button
-        Me.Button18 = New System.Windows.Forms.Button
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.BrowseDataBase = New System.Windows.Forms.OpenFileDialog()
+        Me.txtDataBasePath = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtEmailUser = New System.Windows.Forms.TextBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.txtEmailPass = New System.Windows.Forms.TextBox()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txtEmailServer = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtPort = New System.Windows.Forms.TextBox()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.DDRTemplate = New System.Windows.Forms.OpenFileDialog()
+        Me.txtDDRTemplate = New System.Windows.Forms.TextBox()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.txtActiTemplate = New System.Windows.Forms.TextBox()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.ActivitiesTemplate = New System.Windows.Forms.OpenFileDialog()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtWellName = New System.Windows.Forms.TextBox()
+        Me.Button9 = New System.Windows.Forms.Button()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.txtMaintMode = New System.Windows.Forms.TextBox()
+        Me.Button10 = New System.Windows.Forms.Button()
+        Me.Button11 = New System.Windows.Forms.Button()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.txtLDAPServer = New System.Windows.Forms.TextBox()
+        Me.Button12 = New System.Windows.Forms.Button()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.txtDomain = New System.Windows.Forms.TextBox()
+        Me.Button13 = New System.Windows.Forms.Button()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.Button15 = New System.Windows.Forms.Button()
+        Me.Button16 = New System.Windows.Forms.Button()
+        Me.Button17 = New System.Windows.Forms.Button()
+        Me.Button18 = New System.Windows.Forms.Button()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Button19 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -445,11 +446,21 @@ Partial Class ConfigurationForm
         Me.CheckBox1.Text = "Send Notifications"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
+        'Button19
+        '
+        Me.Button19.Location = New System.Drawing.Point(277, 398)
+        Me.Button19.Name = "Button19"
+        Me.Button19.Size = New System.Drawing.Size(87, 66)
+        Me.Button19.TabIndex = 42
+        Me.Button19.Text = "Test Data Base"
+        Me.Button19.UseVisualStyleBackColor = True
+        '
         'ConfigurationForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(592, 493)
+        Me.Controls.Add(Me.Button19)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Button18)
         Me.Controls.Add(Me.Button17)
@@ -543,4 +554,5 @@ Partial Class ConfigurationForm
     Friend WithEvents Button17 As System.Windows.Forms.Button
     Friend WithEvents Button18 As System.Windows.Forms.Button
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents Button19 As System.Windows.Forms.Button
 End Class

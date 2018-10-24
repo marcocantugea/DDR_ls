@@ -2302,5 +2302,17 @@ Namespace com.ADO
             End Try
         End Sub
 
+        'Modificado 20-Oct-2018
+        'Metodo Para probar la coneccion a la base de datos.
+        Public Sub TestDatabase()
+            Try
+                OpenDB("DB-DDR")
+            Catch ex As Exception
+                Throw
+            Finally
+                CloseDB()
+            End Try
+        End Sub
+
     End Class
 End Namespace

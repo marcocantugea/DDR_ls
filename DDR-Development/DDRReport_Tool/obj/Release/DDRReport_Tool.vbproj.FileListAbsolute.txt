@@ -3,6 +3,7 @@ C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReport_Tool\bin\Releas
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReport_Tool\bin\Release\DDRReport_Tool.pdb
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReport_Tool\bin\Release\DDRReport_Tool.xml
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReport_Tool\bin\Release\DDRReportToolCore.dll
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReport_Tool\bin\Release\MySql.Data.dll
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReport_Tool\bin\Release\DDRReportToolCore.pdb
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReport_Tool\bin\Release\DDRReportToolCore.xml
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRReport_Tool\obj\Release\DDRReport_Tool.vbprojResolveAssemblyReference.cache

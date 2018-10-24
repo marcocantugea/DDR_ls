@@ -11,12 +11,12 @@ Public Class ConfigurationForm
 
     Private Sub ConfigurationForm_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
 
-        connectionstring = System.Configuration.ConfigurationSettings.AppSettings("DB-DDR")
-        Dim val As String()
-        val = connectionstring.Split(";")
-        Dim path As String
-        path = val(1).Substring(12, val(1).Length - 12)
-        txtDataBasePath.Text = path
+        'connectionstring = System.Configuration.ConfigurationSettings.AppSettings("DB-DDR")
+        'Dim val As String()
+        'val = connectionstring.Split(";")
+        'Dim path As String
+        'path = val(1).Substring(12, val(1).Length - 12)
+        'txtDataBasePath.Text = path
         txtEmailUser.Text = System.Configuration.ConfigurationSettings.AppSettings("EmailUserCredential")
         txtEmailPass.Text = System.Configuration.ConfigurationSettings.AppSettings("EmailPasswordCredential")
         txtEmailServer.Text = System.Configuration.ConfigurationSettings.AppSettings("EmailSMTPHost")
@@ -162,5 +162,19 @@ Public Class ConfigurationForm
         Else
             appconfig.UpdateAppSettings("SendNotification", "false")
         End If
+    End Sub
+
+    Private Sub Button19_Click(sender As Object, e As EventArgs) Handles Button19.Click
+        Dim _ADO As New DDRReportToolCore.com.ADO.ADOMySQLDDR
+
+        Try
+            _ADO.TestDatabase()
+            MsgBox("Conecction Success")
+
+        Catch ex As Exception
+            MsgBox(ex.Message.ToString)
+
+        End Try
+
     End Sub
 End Class
