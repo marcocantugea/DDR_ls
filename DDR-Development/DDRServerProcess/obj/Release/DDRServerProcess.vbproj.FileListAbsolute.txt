@@ -21,6 +21,7 @@ C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Rele
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRServerProcess.pdb
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRServerProcess.xml
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRReportToolCore.dll
+C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\MySql.Data.dll
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\Microsoft.Office.Interop.Excel.dll
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRReportToolCore.pdb
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\DDRReportToolCore.xml
@@ -30,4 +31,3 @@ C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Rele
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.exe
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.xml
 C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\obj\Release\DDRServerProcess.pdb
-C:\Users\LM4PCVIT01\Desktop\DDR\DDR_ls\DDR-Development\DDRServerProcess\bin\Release\MySql.Data.dll

@@ -2080,6 +2080,34 @@ Namespace com.ADO
             End Try
         End Sub
 
+        '28-Oct-2018
+        'Se agrego la funcion de Borrado de registro de String Survey
+        Public Sub DeleteStringSurvey(ByVal StringSurvey As DrillString_Survey)
+            Try
+                OpenDB("DB-DDR")
+                connection.Command = New OleDb.OleDbCommand("Delete from ddr_drillstring_surveys where Survey_ID=" & StringSurvey.Survey_ID.ToString & "", connection.Connection)
+                connection.Command.ExecuteNonQuery()
+            Catch ex As Exception
+                Throw
+            Finally
+                CloseDB()
+            End Try
+        End Sub
+
+        '28-Oct-2018
+        'Se agrego la funcion de Borrado de registro de Riser Profile
+        Public Sub DeleteRiserProfile(riserprodile As RiserProfile)
+            Try
+                OpenDB("DB-DDR")
+                connection.Command = New OleDb.OleDbCommand("Delete from riserprofile where IDRiserProfile=" & riserprodile.IDRiserProfile.ToString & "", connection.Connection)
+                connection.Command.ExecuteNonQuery()
+            Catch ex As Exception
+                Throw
+            Finally
+                CloseDB()
+            End Try
+        End Sub
+
 
         Public Sub UpdateDDRLastUpdate(ByVal DDR As DDRControl)
             Dim qbuilder As New QueryBuilder(Of DDRControl)

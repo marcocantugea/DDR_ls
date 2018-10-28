@@ -13,6 +13,12 @@ Public Class DDR_From
     Private _DDROpenDate As Date
     Private ddrloaded As com.entities.DDRControl
 
+    '28 - Oct 2018
+    'Se Agrego vairable para identificar la opcion de borrar en los gridviews
+    Private _deleteRowFrom As String = ""
+    Private _deleteRowIDindex As Integer = -1
+
+
     Public Property DDROpenDate() As Date
         Get
             Return _DDROpenDate
@@ -254,7 +260,7 @@ Public Class DDR_From
     End Sub
 
     Private Sub LoadBITSGrid()
-        dgv_BITS.ColumnCount = 12
+        dgv_BITS.ColumnCount = 13
         dgv_BITS.Columns(0).Name = "BITS No."
         dgv_BITS.Columns(1).Name = "Size(inches)"
         dgv_BITS.Columns(2).Name = "Make"
@@ -264,16 +270,19 @@ Public Class DDR_From
         dgv_BITS.Columns(6).Name = "TFA in2"
         dgv_BITS.Columns(7).Name = "Out"
         dgv_BITS.Columns(8).Name = "In"
+        '28-Oct-2018
+        ' SE modifico el codigo para agregar la columna de Hrs
         dgv_BITS.Columns(9).Name = "Mtrs"
-        dgv_BITS.Columns(10).Name = "BIT Grading"
-        dgv_BITS.Columns(11).Name = "ID"
+        dgv_BITS.Columns(10).Name = "Hrs"
+        dgv_BITS.Columns(11).Name = "BIT Grading"
+        dgv_BITS.Columns(12).Name = "ID"
 
-        Dim row As String() = New String() {"", "", "", "", "", "", "", "", "", "", "", ""}
+        Dim row As String() = New String() {"", "", "", "", "", "", "", "", "", "", "", "", ""}
         dgv_BITS.Rows.Add(row)
         dgv_BITS.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
         'dgv_BITS.RowHeadersVisible = False
-        dgv_BITS.Columns(11).ReadOnly = True
-        dgv_BITS.Columns(11).Width = 35
+        dgv_BITS.Columns(12).ReadOnly = True
+        dgv_BITS.Columns(12).Width = 35
 
     End Sub
 
@@ -1228,9 +1237,18 @@ Public Class DDR_From
                         bit.bit_Mtrs = row.Cells(9).Value
                     End If
 
-                    bit.bit_Comments = row.Cells(10).Value
-                    If Not IsNothing(row.Cells(11).Value) Then
-                        bit.BITS_ID = row.Cells(11).Value
+                    '28-Oct-2018
+                    ' Se agrego la siguiente seccion ya que se agrego el campo de bits_hrs
+                    If IsNothing(row.Cells(10).Value) Then
+                        bit.bit_Hrs = ""
+                    Else
+                        bit.bit_Hrs = row.Cells(10).Value
+                    End If
+
+                    bit.bit_Comments = row.Cells(11).Value
+
+                    If Not IsNothing(row.Cells(12).Value) Then
+                        bit.BITS_ID = row.Cells(12).Value
                     End If
                     bits.Add(bit)
                 End If
@@ -2178,7 +2196,7 @@ Public Class DDR_From
                 'Load BITS
                 If Not IsNothing(_DDR.DDRReport.BITS) Then
                     For Each item As com.entities.BITS In _DDR.DDRReport.BITS.Items
-                        row = New String() {item.bit_No, item.bit_Size, item.bit_Make, item.bit_Serial, item.Bit_type, item.bit_Jets, item.bit_TFA, item.bit_Out, item.bit_In, item.bit_Mtrs, item.bit_Comments, item.BITS_ID}
+                        row = New String() {item.bit_No, item.bit_Size, item.bit_Make, item.bit_Serial, item.Bit_type, item.bit_Jets, item.bit_TFA, item.bit_Out, item.bit_In, item.bit_Mtrs, item.bit_Hrs, item.bit_Comments, item.BITS_ID}
                         dgv_BITS.Rows.Add(row)
                     Next
 
@@ -4335,6 +4353,159 @@ Public Class DDR_From
         Else
             _SessionUser.TabController.RemoveAllItems(_SessionUser.User)
             CheckInTab()
+        End If
+    End Sub
+
+    '28 - Oct 2018
+    'Se agrega funcionalidad para borrar filas de los controles de Gridview
+
+    Private Sub dgv_BITS_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_BITS.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_BITS, New Point(e.X, e.Y))
+            _deleteRowFrom = "BITS"
+            _deleteRowIDindex = 12
+        End If
+    End Sub
+
+    Private Sub DeleteRowToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteRowToolStripMenuItem.Click
+        Dim response As Integer
+        response = MsgBox("Do you want to delete the row?", MsgBoxStyle.YesNo)
+        If response = vbYes Then
+            Try
+                Dim selectedcell As DataGridViewCell
+                selectedcell = CType(RigthOptionMenu.SourceControl, DataGridView).CurrentCell
+                Dim ado As New com.ADO.ADOMySQLDDR
+
+                Select Case _deleteRowFrom
+                    Case "BITS"
+                        Dim bits As New com.entities.BITS
+                        bits.BITS_ID = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeleteBITS(bits)
+
+                    Case "StringSurvey"
+                        Dim string_survey As New com.entities.DrillString_Survey
+                        string_survey.Survey_ID = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeleteStringSurvey(string_survey)
+                    Case "Mud"
+                        Dim Mud As New com.entities.Mud
+                        Mud.MUD_ID = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeleteMud(Mud)
+                    Case "Activities"
+                        Dim activity As New com.entities.Activities
+                        activity.Act_Detail_ID = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeleteActivities(activity)
+                    Case "ActivitiesUrgentMRs"
+                        Dim urgentmr As New com.entities.UrgentMRs
+                        urgentmr.MRUrgentID = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeleteUrgentMR(urgentmr)
+                    Case "ActivitiesWorkOrders"
+                        Dim workorder As New com.entities.WorkOrder
+                        workorder.WorkOrderID = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeleteWorkOrder(workorder)
+                    Case "RiserProfile"
+                        Dim riserprofile As New com.entities.RiserProfile
+                        riserprofile.IDRiserProfile = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeleteRiserProfile(riserprofile)
+                    Case "Logistic"
+                        Dim logistic As New com.entities.LogisticTransitLog
+                        logistic.LTID = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeleteLogisticTransitLog(logistic)
+                    Case "PUMR"
+                        Dim pumr As New com.entities.PUMR
+                        pumr.PRUM_ID = CType(RigthOptionMenu.SourceControl, DataGridView).Rows(selectedcell.RowIndex).Cells(_deleteRowIDindex).Value
+                        ado.DeletePUMR(pumr)
+                End Select
+
+                CType(RigthOptionMenu.SourceControl, DataGridView).Rows.RemoveAt(selectedcell.RowIndex)
+
+                _deleteRowFrom = ""
+                _deleteRowIDindex = -1
+
+            Catch ex As Exception
+
+            Finally
+                _deleteRowFrom = ""
+                _deleteRowIDindex = -1
+
+            End Try
+            
+            'Dim ddrhrs As New com.entities.DDRHrs
+            'ddrhrs.Detail_HR_ID = dgv_DDRHrs.Rows(selectedcell.RowIndex).Cells(6).Value
+
+            'ado.DeleteDDHrs(ddrhrs)
+            'dgv_DDRHrs.Rows.RemoveAt(selectedcell.RowIndex)
+        End If
+    End Sub
+
+    Private Sub dgv_String_Survey_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_String_Survey.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_String_Survey, New Point(e.X, e.Y))
+            _deleteRowFrom = "StringSurvey"
+            _deleteRowIDindex = 6
+        End If
+    End Sub
+
+    Private Sub dgv_Mud_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_Mud.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_Mud, New Point(e.X, e.Y))
+            _deleteRowFrom = "Mud"
+            _deleteRowIDindex = 12
+        End If
+    End Sub
+
+    Private Sub dgv_activities_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_activities.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_activities, New Point(e.X, e.Y))
+            _deleteRowFrom = "Activities"
+            _deleteRowIDindex = 2
+        End If
+    End Sub
+
+    Private Sub dgv_UrgentsMRs_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_UrgentsMRs.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_UrgentsMRs, New Point(e.X, e.Y))
+            _deleteRowFrom = "ActivitiesUrgentMRs"
+            _deleteRowIDindex = 4
+        End If
+    End Sub
+
+    Private Sub dgv_WorkOrders_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_WorkOrders.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_WorkOrders, New Point(e.X, e.Y))
+            _deleteRowFrom = "ActivitiesWorkOrders"
+            _deleteRowIDindex = 5
+        End If
+    End Sub
+
+    Private Sub dgv_RiserProfile_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_RiserProfile.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_RiserProfile, New Point(e.X, e.Y))
+            _deleteRowFrom = "RiserProfile"
+            _deleteRowIDindex = 14
+        End If
+    End Sub
+
+    Private Sub dgv_LogTranLogBoat_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_LogTranLogBoat.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_LogTranLogBoat, New Point(e.X, e.Y))
+            _deleteRowFrom = "Logistic"
+            _deleteRowIDindex = 2
+        End If
+    End Sub
+
+    Private Sub dgv_LogTranLogHeli_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_LogTranLogHeli.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_LogTranLogHeli, New Point(e.X, e.Y))
+            _deleteRowFrom = "Logistic"
+            _deleteRowIDindex = 2
+        End If
+    End Sub
+
+    Private Sub dgv_PUMR_MouseDown(sender As Object, e As MouseEventArgs) Handles dgv_PUMR.MouseDown
+        If e.Button = MouseButtons.Right Then
+            RigthOptionMenu.Show(dgv_PUMR, New Point(e.X, e.Y))
+            _deleteRowFrom = "PUMR"
+            _deleteRowIDindex = 4
         End If
     End Sub
 End Class

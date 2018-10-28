@@ -447,6 +447,8 @@ Partial Class DDR_From
         Me.TextBox148 = New System.Windows.Forms.TextBox()
         Me.DDRUpdateChecker = New System.Windows.Forms.Timer(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.RigthOptionMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.DeleteRowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.tp_DDR_Header.SuspendLayout()
         Me.tp_DDRHrs.SuspendLayout()
@@ -493,6 +495,7 @@ Partial Class DDR_From
         Me.tb_PUMR.SuspendLayout()
         CType(Me.dgv_PUMR, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.RigthOptionMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -4427,6 +4430,18 @@ Partial Class DDR_From
         '
         Me.Timer1.Interval = 180000
         '
+        'RigthOptionMenu
+        '
+        Me.RigthOptionMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeleteRowToolStripMenuItem})
+        Me.RigthOptionMenu.Name = "RigthOptionMenu"
+        Me.RigthOptionMenu.Size = New System.Drawing.Size(134, 26)
+        '
+        'DeleteRowToolStripMenuItem
+        '
+        Me.DeleteRowToolStripMenuItem.Name = "DeleteRowToolStripMenuItem"
+        Me.DeleteRowToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DeleteRowToolStripMenuItem.Text = "Delete Row"
+        '
         'DDR_From
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4525,6 +4540,7 @@ Partial Class DDR_From
         Me.tb_PUMR.ResumeLayout(False)
         CType(Me.dgv_PUMR, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.RigthOptionMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -4953,4 +4969,6 @@ Partial Class DDR_From
     Friend WithEvents lbl_f1superint As System.Windows.Forms.Label
     Friend WithEvents txt_f1supername As System.Windows.Forms.TextBox
     Friend WithEvents lbl_f1supername As System.Windows.Forms.Label
+    Friend WithEvents RigthOptionMenu As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents DeleteRowToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class
