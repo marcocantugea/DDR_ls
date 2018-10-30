@@ -31,13 +31,13 @@ Partial Class LoginSystem
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoginSystem))
-        Me.LogoPictureBox = New System.Windows.Forms.PictureBox
-        Me.UsernameLabel = New System.Windows.Forms.Label
-        Me.PasswordLabel = New System.Windows.Forms.Label
-        Me.UsernameTextBox = New System.Windows.Forms.TextBox
-        Me.PasswordTextBox = New System.Windows.Forms.TextBox
-        Me.OK = New System.Windows.Forms.Button
-        Me.Cancel = New System.Windows.Forms.Button
+        Me.LogoPictureBox = New System.Windows.Forms.PictureBox()
+        Me.UsernameLabel = New System.Windows.Forms.Label()
+        Me.PasswordLabel = New System.Windows.Forms.Label()
+        Me.UsernameTextBox = New System.Windows.Forms.TextBox()
+        Me.PasswordTextBox = New System.Windows.Forms.TextBox()
+        Me.OK = New System.Windows.Forms.Button()
+        Me.Cancel = New System.Windows.Forms.Button()
         CType(Me.LogoPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
