@@ -3470,7 +3470,7 @@ Public Class DDR_From
         If response = vbYes Then
             Dim ado As New com.ADO.ADOMySQLDDR
             Dim bits As New com.entities.BITS
-            bits.BITS_ID = e.Row.Cells(11).Value
+            bits.BITS_ID = e.Row.Cells(12).Value
             ado.DeleteBITS(bits)
             'dgv_BITS.Rows.RemoveAt(selectedcell.RowIndex)
         End If
