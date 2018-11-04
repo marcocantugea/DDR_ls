@@ -3623,7 +3623,7 @@ Public Class DDR_From
         Dim row As String()
         If Not IsNothing(_DDR.DDRReport.BITS) Then
             For Each item As com.entities.BITS In _DDR.DDRReport.BITS.Items
-                row = New String() {item.bit_No, item.bit_Size, item.bit_Make, item.bit_Serial, item.Bit_type, item.bit_Jets, item.bit_TFA, item.bit_Out, item.bit_In, item.bit_Mtrs, item.bit_Comments, item.BITS_ID}
+                row = New String() {item.bit_No, item.bit_Size, item.bit_Make, item.bit_Serial, item.Bit_type, item.bit_Jets, item.bit_TFA, item.bit_Out, item.bit_In, item.bit_Mtrs, item.bit_Hrs, item.bit_Comments, item.BITS_ID}
                 dgv_BITS.Rows.Add(row)
             Next
         End If
