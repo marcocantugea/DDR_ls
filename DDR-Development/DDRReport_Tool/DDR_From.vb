@@ -3299,6 +3299,24 @@ Public Class DDR_From
         Dim ado As New com.ADO.ADOMySQLDDR
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
         If dgv_UrgentsMRs.Rows(e.RowIndex).Cells(0).Value <> "" Or dgv_UrgentsMRs.Rows(e.RowIndex).Cells(1).Value <> "" Or dgv_UrgentsMRs.Rows(e.RowIndex).Cells(2).Value <> "" Or dgv_UrgentsMRs.Rows(e.RowIndex).Cells(3).Value <> "" Then
+
+            '4 Nov 2018
+            'Se Arega la funcionalidad de cargar la MR si la encuentra en AMOS
+            'revisa si la celda que edito es el mrnumber
+            If e.ColumnIndex = 0 Then
+                Dim adoExternal As New com.ADO.ADOExternalDB
+                Try
+                    Dim valor As String = adoExternal.GetAMOSMR(dgv_UrgentsMRs.Rows(e.RowIndex).Cells(0).Value)
+                    Dim formated_value As String() = valor.Split("|")
+                    dgv_UrgentsMRs.Rows(e.RowIndex).Cells(1).Value = Date.Parse(formated_value(4)).ToString("dd-MMM-yyyy")
+                    dgv_UrgentsMRs.Rows(e.RowIndex).Cells(2).Value = formated_value(3)
+                    dgv_UrgentsMRs.Rows(e.RowIndex).Cells(3).Value = formated_value(2)
+                Catch ex As Exception
+
+                End Try
+            End If
+
+
             If IsNothing(dgv_UrgentsMRs.Rows(e.RowIndex).Cells(4).Value) Then
                 Dim umr As New com.entities.UrgentMRs
                 umr.DDR_Report_ID = _DDR.DDRID
@@ -3331,6 +3349,29 @@ Public Class DDR_From
         Dim ado As New com.ADO.ADOMySQLDDR
         deparmentid = ado.GetDeparmentID(ComboBox1.Text)
         If dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value <> "" Or dgv_WorkOrders.Rows(e.RowIndex).Cells(3).Value <> "" Then
+
+            '5-Nov-2018
+            'Se agrego la funcionalidad de cuanto teclea la Work order busca en la base de datos la info
+            If e.ColumnIndex = 2 Then
+                Dim adoExternal As New com.ADO.ADOExternalDB
+                Try
+                    Dim valor As String = adoExternal.GetAMOSWO(dgv_WorkOrders.Rows(e.RowIndex).Cells(2).Value)
+                    Dim formated_value As String() = valor.Split("|")
+                    dgv_WorkOrders.Rows(e.RowIndex).Cells(3).Value = formated_value(1)
+                    If formated_value(2).Equals("PREV") Then
+                        Dim chk_p As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(0)
+                        chk_p.Value = True
+                    End If
+
+                    If formated_value(2).Equals("CORR") Then
+                        Dim chk_c As DataGridViewCheckBoxCell = dgv_WorkOrders.Rows(e.RowIndex).Cells(1)
+                        chk_c.Value = True
+                    End If
+
+                Catch ex As Exception
+
+                End Try
+            End If
 
             If IsNothing(dgv_WorkOrders.Rows(e.RowIndex).Cells(5).Value) Then
                 Dim wo As New com.entities.WorkOrder

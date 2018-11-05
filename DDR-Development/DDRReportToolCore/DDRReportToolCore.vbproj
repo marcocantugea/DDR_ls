@@ -76,12 +76,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lib\com\ADO\ADODDR.vb" />
+    <Compile Include="Lib\com\ADO\ADOExternalDB.vb" />
     <Compile Include="Lib\com\ADO\ADOMySQLDDR.vb" />
     <Compile Include="Lib\com\ADO\QueryBuilder.vb" />
     <Compile Include="Lib\com\configration\AppConfigFileSettings.vb" />
     <Compile Include="Lib\com\Data\ConnectionProperties.vb" />
     <Compile Include="Lib\com\Data\MySQLConnectionObj.vb" />
     <Compile Include="Lib\com\Data\MySQLConnectionProperties.vb" />
+    <Compile Include="Lib\com\Data\ODBCConnectionObj.vb" />
+    <Compile Include="Lib\com\Data\ODBCConnectionProperties.vb" />
     <Compile Include="Lib\com\Data\OleDBConnectionObj.vb" />
     <Compile Include="Lib\com\entities\Activities.vb" />
     <Compile Include="Lib\com\entities\Activities_Collection.vb" />

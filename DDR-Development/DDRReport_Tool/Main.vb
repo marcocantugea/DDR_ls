@@ -80,4 +80,18 @@ Public Class Main
     Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
         
     End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Dim testdatabase As New com.ADO.ADOExternalDB
+
+        Try
+
+            testdatabase.TestDatabaseExternal()
+
+            MsgBox("Database opened")
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
 End Class

@@ -1,13 +1,13 @@
-﻿Imports MySql.Data.MySqlClient
-Imports System.Data.OleDb
-Namespace com.data
+﻿Imports System.Data.Odbc
 
-    Public Class MySQLConnectionProperties
+Namespace com.data
+    Public Class ODBCConnectionProperties
         Dim _Name As String
         Dim _ConectionString As String
-        Dim _Connection As MySqlConnection
-        Dim _Adap As MySqlDataAdapter
-        Dim _Command As MySqlCommand
+        Dim _Connection As OdbcConnection
+        Dim _Adap As OdbcDataAdapter
+        Dim _Command As OdbcCommand
+
 
         Public Property Name() As String
             Get
@@ -32,32 +32,32 @@ Namespace com.data
             End Set
         End Property
 
-        Public ReadOnly Property Connection() As MySqlConnection
+        Public ReadOnly Property Connection() As OdbcConnection
             Get
                 Return _Connection
             End Get
         End Property
 
-        Public Property Adap() As MySqlDataAdapter
+        Public Property Adap() As OdbcDataAdapter
             Get
                 Return _Adap
             End Get
-            Set(ByVal value As MySqlDataAdapter)
+            Set(ByVal value As OdbcDataAdapter)
                 _Adap = value
             End Set
         End Property
 
-        Public Property Command() As MySqlCommand
+        Public Property Command() As OdbcCommand
             Get
                 Return _Command
             End Get
-            Set(ByVal value As MySqlCommand)
+            Set(ByVal value As OdbcCommand)
                 _Command = value
             End Set
         End Property
 
         Public Sub SetUpConnection()
-            _Connection = New MySqlConnection(_ConectionString)
+            _Connection = New OdbcConnection(_ConectionString)
         End Sub
     End Class
 End Namespace

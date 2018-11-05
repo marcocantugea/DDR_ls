@@ -17,6 +17,11 @@ Public Class LoginSystem
 
     Private secuencia As New ArrayList
 
+    '4 Nov 2018
+    'Agregar funcionalidad para que muestre el formulario de pruebas
+
+    Private clicimagecount As Integer = 0
+
     Private Sub OK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK.Click
         Dim ladp As New com.security.LDAP_Auth(System.Configuration.ConfigurationSettings.AppSettings("LDAPDIR"))
         Try
@@ -169,5 +174,15 @@ Public Class LoginSystem
 
 
         End If
+    End Sub
+
+    Private Sub LogoPictureBox_MouseClick(sender As Object, e As MouseEventArgs) Handles LogoPictureBox.MouseClick
+        clicimagecount = clicimagecount + 1
+        If clicimagecount = 10 Then
+            Dim main As New Main
+            main.Show()
+            clicimagecount = 0
+        End If
+
     End Sub
 End Class
